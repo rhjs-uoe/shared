@@ -1,0 +1,29 @@
+if (textArea.getSelectionCount() > 0) {
+  Selection s = textArea.getSelection(0);
+  end = s.getEndLine();
+  start = s.getStartLine();
+} else {
+  start = textArea.getCaretLine();
+  end = start;
+}
+
+String fileName = buffer.getSymlinkPath();
+FileInputStream is = new FileInputStream(fileName);
+InputStreamReader isr = new InputStreamReader(is, "ASCII");
+BufferedReader buff = new BufferedReader(isr);
+
+int lineIndex = 0;
+String res = "";
+while ((line = buff.readLine()) != null) {
+  if (lineIndex >= start) {
+    res += line;
+    res += "\n";
+  }
+  lineIndex ++;
+  if (lineIndex > end) { break; }
+}
+
+buff.close();
+
+// Macros.input(view, res, res);
+Registers.getRegister('$').setValue(res);
