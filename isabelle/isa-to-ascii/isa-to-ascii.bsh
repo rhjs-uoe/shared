@@ -1,10 +1,34 @@
+// This can be optimised. I didn't know that selections are returned in top-to-bottom order to begin with, nor that overlapping but distinct selections were not allowed. Both of those facts simplify things, though the latter would have broken how this is written anyway.
+
+public class IntPair {
+  public final int fst;
+  public final int snd;
+  public IntPair(int fst, int snd) {
+    this.fst = fst;
+    this.snd = snd;
+  }
+}
+
+List selectionIntervals = new ArrayList();
+
+int finalIndex = 0;
 if (textArea.getSelectionCount() > 0) {
-  Selection s = textArea.getSelection(0);
-  end = s.getEndLine();
-  start = s.getStartLine();
+  for (int i = 0; i < textArea.getSelectionCount(); i++) {
+    Selection s = textArea.getSelection(i);
+    end = s.getEndLine();
+    start = s.getStartLine();
+    if (end > finalIndex) {
+      finalIndex = end;
+    }
+    selectionIntervals.add(new IntPair(start, end));
+  }
 } else {
   start = textArea.getCaretLine();
   end = start;
+  if (end > finalIndex) {
+    finalIndex = end;
+  }
+  selectionIntervals.add(new IntPair(start, end));
 }
 
 String fileName = buffer.getSymlinkPath();
@@ -13,17 +37,29 @@ InputStreamReader isr = new InputStreamReader(is, "ASCII");
 BufferedReader buff = new BufferedReader(isr);
 
 int lineIndex = 0;
+IntPair currentIvl = null;
 String res = "";
-while ((line = buff.readLine()) != null) {
-  if (lineIndex >= start) {
+while ((line = buff.readLine()) != null && lineIndex <= finalIndex) {
+  if (currentIvl == null) {
+    for (IntPair ivl : selectionIntervals) {
+      if (lineIndex >= ivl.fst && lineIndex <= ivl.snd) {
+        currentIvl = ivl;
+        res += line;
+        res += "\n";
+        break;
+      }
+    }
+  } else if (lineIndex > currentIvl.snd) {
+    currentIvl = null;
+    res += "\n";
+  } else {
     res += line;
     res += "\n";
   }
-  lineIndex ++;
-  if (lineIndex > end) { break; }
+
+  lineIndex++;
 }
 
 buff.close();
 
-// Macros.input(view, res, res);
 Registers.getRegister('$').setValue(res);
