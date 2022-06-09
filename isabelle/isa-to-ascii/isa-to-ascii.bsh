@@ -60,4 +60,6 @@ while ((line = buff.readLine()) != null && lineIndex <= finalIndex) {
   lineIndex++;
 }
 
+buff.close();
+
 Registers.getRegister('$').setValue(res);
