@@ -1,0 +1,4 @@
+# LaTeX standard ignores
+*.aux
+*.log
+*.synctex.gz
