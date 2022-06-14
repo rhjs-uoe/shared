@@ -16,7 +16,8 @@ You can write inline listings using the \lisa|\lisa| command: \lisa|A \<Longrigh
 
 Listing environments are used as in the \lisa!listings! package, with defaults set in \lisa!lisa.sty!. Notably, these are \lisa!\footnotesize!.
 \begin{lstlisting}
-A \<Longrightarrow> B \<longrightarrow> C
+lemma example: "A \<Longrightarrow> B \<longrightarrow> C"
+  using (*...*) by simp
 \end{lstlisting}
 
 \end{document}
