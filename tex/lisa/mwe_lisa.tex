@@ -1,0 +1,22 @@
+\documentclass[]{article}
+
+\usepackage{lisa}
+
+%opening
+\title{Minimal \lisa!lisa! Example}
+\author{Richard Schmoetten}
+
+\begin{document}
+
+\maketitle
+
+\section{Copy/Paste \lisa!Isabelle! listings: \lisa|A \\<Longrightarrow> B|}
+
+You can write inline listings using the \lisa|\lisa| command: \lisa|A \<Longrightarrow> B|. This should\footnote{Automatically adjust the font size: \lisa|A \<Longrightarrow> B|. Thanks for making literals work, \lisa|bigfoot|!} also work in footnotes. It also works without the \lisa!bigfoot! package, provided you escape special characters. You do currently have to escape e.g. backslashes in \lisa!lisa! inline listings in titles.
+
+Listing environments are used as in the \lisa!listings! package, with defaults set in \lisa!lisa.sty!. Notably, these are \lisa!\footnotesize!.
+\begin{lstlisting}
+A \<Longrightarrow> B \<longrightarrow> C
+\end{lstlisting}
+
+\end{document}

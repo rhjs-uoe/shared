@@ -1,0 +1,112 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{lisa}[Paste ASCII Isabelle into listings.]
+
+
+\RequirePackage{xcolor}
+\RequirePackage{fancyvrb}
+\RequirePackage[fancyvrb]{listings}
+\RequirePackage{bigfoot}% enables verbatim-like content for footnotes
+
+%colors for use in syntax highlighting
+\definecolor{isa-rangecomment}{RGB}{139,0,0}
+\definecolor{bgr-lightgrey}{gray}{0.98}
+% \definecolor{bgr-lightgrey}{gray}{0.95}
+\definecolor{isa-kwcolor-2}{RGB}{27,158,119}%green
+\definecolor{isa-kwcolor-3}{RGB}{217,95,2}%orange
+\definecolor{isa-kwcolor-4}{RGB}{117,112,179}%blue
+\colorlet{isa-proofsnip}{isa-kwcolor-3}
+%
+% new language
+\lstdefinelanguage{Isar}%
+{
+  morekeywords=[2]{
+    _first,
+    theory,begin,end,types,datatype,consts,defs,primrec,
+    syntax,translations,apply,
+    lemma,theorem,corollary,definition,inductive,where,locale,context,abbreviation,
+    done,next,proof,and,qed,
+    assumes,fixes,shows,case,goal,obtains,defines,OF,in,
+    fixed variables,
+    _last
+  },
+  keywordstyle={[2]\bfseries\color{isa-kwcolor-2}},
+  morekeywords=[3]{
+  	sorry,oops
+  },
+  keywordstyle={[3]\bfseries\color{isa-kwcolor-3}},
+  morekeywords=[4]{
+    then,this,thus,hence,have,assume,obtain,moreover,fix,show,by,using,unfolding,
+    ultimately,let,if,for,else,consider
+  },
+  keywordstyle={[4]\bfseries\color{isa-kwcolor-4}},
+  sensitive=true,
+  morecomment=[l]{-- },
+  morecomment=[s]{(*}{*)},
+%  morecomment=[s]{\\<\^cancel>\\<open>}{\\<close>}, TODO ⌦
+  literate=
+  	{(*...*)}{{\textcolor{isa-proofsnip}{\textbf{...}}}}3
+  	{<proof>}{{\textcolor{isa-proofsnip}{\textbf{<proof>}}}}7
+    {\\<not>}{{$\neg$}}1
+    {\\<times>}{{$×$}}1
+    {\\<Rightarrow>}{{$\Rightarrow$}}2%
+    {\\<equiv>}{{$\equiv$}}1
+    {~=}{{$\not=$}}1
+    {\\<rightleftharpoons>}{{$\rightleftharpoons$}}2
+    {\\<exists>}{{$\exists$}}1
+    {\\<forall>}{{$\forall$}}1
+    {\\<in>}{{$\in$}}1
+    {\\<notin>}{{$\notin$}}1
+    {\\<union>}{{$\cup$}}1
+    {\\<Union>}{{$\bigcup$}}2
+    {\\<inter>}{{$\cap$}}1
+    {\\<emptyset>}{{$\emptyset$}}1
+    {\\<theta>}{{$\theta$}}1
+    {\\<Theta>}{{$\Theta$}}1
+    {\\<lambda>}{{$\lambda$}}1
+    {\\<E>}{{$\E$}}1
+    {\\<subseteq>}{{$\subseteq$}}1
+    {\\<ge>}{{$\geq$}}1
+    {\\<le>}{{$\leq$}}1
+    {\\<noteq>}{{$\neq$}}1
+    {\\<P>}{{$\P$}}1
+    {\\<parallel>}{{$\parallel$}}1
+    {\\<Longrightarrow>}{{$\Longrightarrow$}}3
+    {\\<longrightarrow>}{{$\longrightarrow$}}3
+    {\\<leftrightarrow>}{{$\leftrightarrow$}}2
+    {\\<longleftrightarrow>}{{$\longleftrightarrow$}}3
+    {\\<leadsto>}{{$\rightsquigarrow$}}2
+    {\\<lbrakk>}{{$\lsemantics$}}1
+    {\\<rbrakk>}{{$\rsemantics$}}1
+    {\\<and>}{{$\land$}}1
+    {\\<or>}{{$\lor$}}1
+    {\\<bigwedge>}{{$\bigwedge$}}1
+    {\\<And>}{{$\bigwedge$}}1
+    {\\<triangle>}{{$\triangle$}}1
+    {\\<open>}{{$\langle$}}1
+    {\\<close>}{{$\rangle$}}1
+    {\\<\^cancel>}{{\%}}1
+    {\\<\^sub>}{{\_}}1
+    {ü}{"u}1 {ä}{"a}1 {ö}{"o}1
+    {Ü}{"U}1 {Ä}{"A}1 {Ö}{"O}1 {ß}{{ss}}1
+}[keywords,comments,strings]%
+
+% useful defaults
+\lstset{
+%  labelstep=1,
+%  labelstyle=\tiny,
+%  labelsep=5pt,
+%  mathescape,
+  language=Isar,
+  basicstyle=\linespread{1.0}\ttfamily\footnotesize,
+  commentstyle=\color{isa-rangecomment}\rm\it,
+  flexiblecolumns=false,
+  breaklines=true,
+  breakautoindent=false,
+  backgroundcolor=\color{bgr-lightgrey},
+  keepspaces=true
+}
+
+% Redefine lstinline to always use text size instead of listings size
+% (small textsize listings for easier alignment, normal textsize inlines)
+\newcommand{\lisa}[1][]{\lstinline[basicstyle=\ttfamily,language=Isar,#1]}
+% \newcommand{\lisa}[1]{\lstinline[basicstyle=\ttfamily\normalsize,language=Isar]{#1}}
