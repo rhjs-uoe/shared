@@ -3,3 +3,7 @@
 *.aux
 *.log
 *.synctex.gz
+
+# my own template (depends on my file system)
+lisa/template.pdf
+lisa/template.tex
