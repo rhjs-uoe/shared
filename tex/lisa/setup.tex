@@ -1,0 +1,62 @@
+%%% single-line packages %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{xcolor}
+\usepackage[top=2cm,bottom=2cm,left=2cm,right=4cm]{geometry}
+\usepackage{standalone}
+\usepackage{lisa}
+
+%%% hyperref %%%
+%%%%%%%%%%%%%%%%
+\usepackage{hyperref}
+% This colours the hyperlinks, which is better for screen reading. COMMENT for printing/colorblind-friendliness.
+\hypersetup{
+    colorlinks,
+    linkcolor={red!50!black},
+    citecolor={blue!50!black},
+    urlcolor={blue!80!black}
+}
+
+%%% AMS packages %%%
+%%%%%%%%%%%%%%%%%%%%
+\usepackage{amsmath, amsthm, amssymb}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{example}{Example}[section]
+\newtheorem{exercise}[example]{Exercise}
+\theoremstyle{remark}
+\newtheorem*{rem}{Remark}
+\newtheorem*{note}{Note}
+
+%%% fancyref %%%
+%%%%%%%%%%%%%%%%
+\usepackage[plain]{fancyref}% tight spacing because I use abbreviated cross references, e.g. Fig. 1
+\renewcommand*{\fancyrefdefaultspacing}{\fancyreftightspacing}
+% existing name and (format?) changes (here, shortened)
+\renewcommand*{\Frefeqname}{Eqn.}
+% new prefixes
+\newcommand*{\fancyrefthmlabelprefix}{thm}
+\newcommand*{\fancyrefdeflabelprefix}{def}
+\newcommand*{\fancyrefeqnlabelprefix}{eqn}
+% new names and formats
+\newcommand*{\Frefdefname}{Def.}
+\newcommand*{\frefdefname}{def.}
+\frefformat{plain}{\fancyrefdeflabelprefix}{\frefdefname\fancyrefdefaultspacing#1}
+\Frefformat{plain}{\fancyrefdeflabelprefix}{\Frefdefname\fancyrefdefaultspacing#1}
+\newcommand*{\Frefeqnname}{Eqn.}
+\newcommand*{\frefeqnname}{eqn.}
+\frefformat{plain}{\fancyrefeqnlabelprefix}{\frefeqnname\fancyrefdefaultspacing#1}
+\Frefformat{plain}{\fancyrefeqnlabelprefix}{\Frefeqnname\fancyrefdefaultspacing#1}
+
+%%% TiKZ %%%
+\usepackage{tikz}
+%\usetikzlibrary{arrows}
+
+%%% mathtools %%%
+%%%%%%%%%%%%%%%%%
+\usepackage{mathtools}
+\DeclarePairedDelimiter\norm\lVert\rVert
+\DeclarePairedDelimiter{\all}{\forall}{.\quad}
+\DeclarePairedDelimiter{\any}{\exists}{.\quad}
+
+\newcommand{\setR}{\ensuremath{\mathbb R}}
+\newcommand{\setC}{\ensuremath{\mathbb C}}
