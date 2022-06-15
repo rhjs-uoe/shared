@@ -2,20 +2,51 @@
 \ProvidesPackage{lisa}[Paste ASCII Isabelle into listings.]
 
 
+%\RequirePackage{kvoptions}
 \RequirePackage{xcolor}
 \RequirePackage{fancyvrb}
 \RequirePackage[fancyvrb]{listings}
 \RequirePackage{bigfoot}% enables verbatim-like content for footnotes
+\RequirePackage{ltxcmds}
 
 %colors for use in syntax highlighting
-\definecolor{isa-rangecomment}{RGB}{139,0,0}
-\definecolor{bgr-lightgrey}{gray}{0.98}
-% \definecolor{bgr-lightgrey}{gray}{0.95}
-\definecolor{isa-kwcolor-2}{RGB}{27,158,119}%green
-\definecolor{isa-kwcolor-3}{RGB}{217,95,2}%orange
-\definecolor{isa-kwcolor-4}{RGB}{117,112,179}%blue
-\colorlet{isa-proofsnip}{isa-kwcolor-3}
-%
+\DeclareOption{color}{
+    \definecolor{isa-rangecomment}{RGB}{139,0,0}
+    \definecolor{bgr-lightgrey}{gray}{0.98}
+    \definecolor{isa-kwcolor-2}{RGB}{27,158,119}%green
+    \definecolor{isa-kwcolor-3}{RGB}{217,95,2}%orange
+    \definecolor{isa-kwcolor-4}{RGB}{117,112,179}%blue
+    \colorlet{isa-proofsnip}{isa-kwcolor-3}
+}
+
+% black and white option
+\DeclareOption{monochrome}{
+    \definecolor{isa-rangecomment}{gray}{0.3}
+    \definecolor{bgr-lightgrey}{gray}{0.98}
+    \colorlet{isa-kwcolor-2}{black}
+    \colorlet{isa-kwcolor-3}{black}
+    \colorlet{isa-kwcolor-4}{black}
+    \colorlet{isa-proofsnip}{isa-kwcolor-3}
+}
+
+% slightly dubious font selection option
+\DeclareOption{iosevka}{
+    \ltx@ifpackageloaded{fontspec}{
+        \renewfontfamily{\ttfamily}{Iosevka NF}
+%        \newcommand{\oldttfamily}{\ttfamily}
+%        \renewcommand{\ttfamily}{\footnotesize\oldttfamily}
+    }{}
+}
+
+
+% Unknown option handling
+\DeclareOption*{\PackageWarning{lisa}{Unknown ‘\CurrentOption’}}
+
+% Default options and running the option code
+\ExecuteOptions{color}
+
+\ProcessOptions\relax
+
 % new language
 \lstdefinelanguage{Isar}%
 {
