@@ -27,6 +27,14 @@
 %%%%%%%%%%%%%%%%%%%%
 \usepackage{physics}% includes amsmath, great for \bra and \ket etc.
 \usepackage{amsthm}
+% additional symbol definitions
+\newcommand\restr[2]{{% we make the whole thing an ordinary symbol
+  \left.\kern-\nulldelimiterspace % automatically resize the bar with \right
+  #1 % the function
+  \vphantom{\big|} % pretend it's a little taller at normal size - comment if not wanted
+  \right|_{#2} % this is the delimiter
+}}
+% Environment definitions, mostly standard
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}[section]
 \newtheorem{example}{Example}[section]
