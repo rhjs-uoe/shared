@@ -18,7 +18,8 @@
 
 %%% AMS packages %%%
 %%%%%%%%%%%%%%%%%%%%
-\usepackage{amsmath, amsthm, amssymb}
+\usepackage{physics}% includes amsmath, great for \bra and \ket etc.
+\usepackage{amsthm, amssymb}
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}[section]
 \newtheorem{example}{Example}[section]
@@ -54,7 +55,7 @@
 %%% mathtools %%%
 %%%%%%%%%%%%%%%%%
 \usepackage{mathtools}
-\DeclarePairedDelimiter\norm\lVert\rVert
+%\DeclarePairedDelimiter\norm\lVert\rVert% The physics package defines norm for us - I use \| a \| anyway.
 \DeclarePairedDelimiter{\all}{\forall}{.\quad}
 \DeclarePairedDelimiter{\any}{\exists}{.\quad}
 
