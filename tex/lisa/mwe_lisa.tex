@@ -1,7 +1,5 @@
 \documentclass[]{article}
 
-%\usepackage{fontspec}
-%\usepackage[iosevka]{lisa}
 \usepackage{lisa}
 
 %opening
@@ -19,8 +17,57 @@ You can write inline listings using the \lisa|\lisa| command: \lisa|A \<Longrigh
 Listing environments are used as in the \lisa!listings! package, with defaults set in \lisa!lisa.sty!. Notably, these are \lisa!\footnotesize!.
 \begin{lstlisting}
 (* This is a great example! *)
-lemma example: "A \<Longrightarrow> B \<longrightarrow> C"
+lemma example: "A \<leadsto> B \<longrightarrow> C"
   using (*...*) by simp
+\end{lstlisting}
+
+\pagebreak
+All uncommented lines listed below should start with the replaced/rendered literal in curly brackets.
+\begin{lstlisting}
+    {(*...*)}{{\textcolor{isa-proofsnip}{\textbf{...}}}}3
+    {<proof>}{{\textcolor{isa-proofsnip}{\textbf{<proof>}}}}7
+    {\<not>}{{$\neg$}}1
+    {\<times>}{{$×$}}1
+    {\<Rightarrow>}{{$\Rightarrow$}}2%
+    {\<equiv>}{{$\equiv$}}1
+    {~=}{{$\not=$}}1
+    {\<rightleftharpoons>}{{$\rightleftharpoons$}}2
+    {\<exists>}{{$\exists$}}1
+    {\<forall>}{{$\forall$}}1
+    {\<in>}{{$\in$}}1
+    {\<notin>}{{$\notin$}}1
+    {\<union>}{{$\cup$}}1
+    {\<Union>}{{$\bigcup$}}2
+    {\<inter>}{{$\cap$}}1
+    {\<emptyset>}{{$\emptyset$}}1
+    {\<theta>}{{$\theta$}}1
+    {\<Theta>}{{$\Theta$}}1
+    {\<lambda>}{{$\lambda$}}1
+    {\<subseteq>}{{$\subseteq$}}1
+    {\<ge>}{{$\geq$}}1
+    {\<le>}{{$\leq$}}1
+    {\<noteq>}{{$\neq$}}1
+%    {\<E>}{{$\E$}}1
+%    {\<P>}{{$\P$}}1
+    {\<parallel>}{{$\parallel$}}1
+    {\<Longrightarrow>}{{$\Longrightarrow$}}3
+    {\<longrightarrow>}{{$\longrightarrow$}}3
+    {\<leftrightarrow>}{{$\leftrightarrow$}}2
+    {\<longleftrightarrow>}{{$\longleftrightarrow$}}3
+    {\<leadsto>}{{$\rightsquigarrow$}}2
+    {\<lbrakk>}{{$\lsemantics$}}1
+    {\<rbrakk>}{{$\rsemantics$}}1
+    {\<and>}{{$\land$}}1
+    {\<or>}{{$\lor$}}1
+    {\<bigwedge>}{{$\bigwedge$}}1
+    {\<And>}{{$\bigwedge$}}1
+    {\<triangle>}{{$\triangle$}}1
+    {\<open>}{{$\langle$}}1
+    {\<close>}{{$\rangle$}}1
+%    {\<\^cancel>}{{\%}}1
+%    {\<\^sub>}{{\_}}1
+%    {ü}{"u}1 {ä}{"a}1 {ö}{"o}1
+%    {Ü}{"U}1 {Ä}{"A}1 {Ö}{"O}1 {ß}{{ss}}1
 \end{lstlisting}
 
 \end{document}

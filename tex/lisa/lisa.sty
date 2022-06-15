@@ -8,6 +8,7 @@
 \RequirePackage[fancyvrb]{listings}
 \RequirePackage{bigfoot}% enables verbatim-like content for footnotes
 \RequirePackage{ltxcmds}
+\RequirePackage{amssymb}% for squiggly arrows
 
 %colors for use in syntax highlighting
 \DeclareOption{color}{
@@ -47,6 +48,13 @@
 
 \ProcessOptions\relax
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Symbol definitions %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\lsemantics}{\mathopen{\lbrack\mkern-3mu\lbrack}}
+\newcommand{\rsemantics}{\mathclose{\rbrack\mkern-3mu\rbrack}}
+
 % new language
 \lstdefinelanguage{Isar}%
 {
@@ -75,8 +83,8 @@
   morecomment=[s]{(*}{*)},
 %  morecomment=[s]{\\<\^cancel>\\<open>}{\\<close>}, TODO ⌦
   literate=
-  	{(*...*)}{{\textcolor{isa-proofsnip}{\textbf{...}}}}3
-  	{<proof>}{{\textcolor{isa-proofsnip}{\textbf{<proof>}}}}7
+    {(*...*)}{{\textcolor{isa-proofsnip}{\textbf{...}}}}3
+    {<proof>}{{\textcolor{isa-proofsnip}{\textbf{<proof>}}}}7
     {\\<not>}{{$\neg$}}1
     {\\<times>}{{$×$}}1
     {\\<Rightarrow>}{{$\Rightarrow$}}2%
@@ -94,12 +102,12 @@
     {\\<theta>}{{$\theta$}}1
     {\\<Theta>}{{$\Theta$}}1
     {\\<lambda>}{{$\lambda$}}1
-    {\\<E>}{{$\E$}}1
     {\\<subseteq>}{{$\subseteq$}}1
     {\\<ge>}{{$\geq$}}1
     {\\<le>}{{$\leq$}}1
     {\\<noteq>}{{$\neq$}}1
-    {\\<P>}{{$\P$}}1
+%    {\\<E>}{{$\E$}}1
+%    {\\<P>}{{$\P$}}1
     {\\<parallel>}{{$\parallel$}}1
     {\\<Longrightarrow>}{{$\Longrightarrow$}}3
     {\\<longrightarrow>}{{$\longrightarrow$}}3
@@ -115,10 +123,10 @@
     {\\<triangle>}{{$\triangle$}}1
     {\\<open>}{{$\langle$}}1
     {\\<close>}{{$\rangle$}}1
-    {\\<\^cancel>}{{\%}}1
-    {\\<\^sub>}{{\_}}1
-    {ü}{"u}1 {ä}{"a}1 {ö}{"o}1
-    {Ü}{"U}1 {Ä}{"A}1 {Ö}{"O}1 {ß}{{ss}}1
+%    {\\<\^cancel>}{{\%}}1
+%    {\\<\^sub>}{{\_}}1
+%    {ü}{"u}1 {ä}{"a}1 {ö}{"o}1
+%    {Ü}{"U}1 {Ä}{"A}1 {Ö}{"O}1 {ß}{{ss}}1
 }[keywords,comments,strings]%
 
 % useful defaults
