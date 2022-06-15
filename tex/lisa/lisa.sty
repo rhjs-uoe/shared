@@ -29,13 +29,25 @@
     \colorlet{isa-proofsnip}{isa-kwcolor-3}
 }
 
+\DeclareOption{stdfont}{
+%    \newcommand\lisafamily{\fontfamily{\ttfamily}\selectfont}
+    \newcommand{\lstlisafamily}{\ttfamily\footnotesize}
+    \newcommand{\inlisafamily}{\ttfamily}
+}
+
+\ExecuteOptions{stdfont}% define the basic font families now, then redefine with fontspec if provided
+
 % slightly dubious font selection option
 \DeclareOption{iosevka}{
     \ltx@ifpackageloaded{fontspec}{
-        \renewfontfamily{\ttfamily}{Iosevka NF}
+%        \renewfontfamily{\ttfamily}{Iosevka NF}
 %        \newcommand{\oldttfamily}{\ttfamily}
 %        \renewcommand{\ttfamily}{\footnotesize\oldttfamily}
-    }{}
+        \renewfontfamily\lstlisafamily{Iosevka NF}[Scale=0.85]
+        \renewfontfamily\inlisafamily{Iosevka NF}[Scale=0.85]
+    }{
+        \PackageWarning{lisa}{The Iosevka option requires fontspec and XeLaTeX (or maybe LuaLaTeX), as well as the font Iosevka NF.}
+    }
 }
 
 
@@ -128,7 +140,9 @@
 %  labelsep=5pt,
 %  mathescape,
   language=Isar,
-  basicstyle=\linespread{1.0}\ttfamily\footnotesize,
+%  basicstyle=\linespread{1.0}\lstlisafamily,
+  basicstyle=\lstlisafamily,
+%  commentstyle=\color{isa-rangecomment},
   commentstyle=\color{isa-rangecomment}\rm\it,
   flexiblecolumns=false,
   breaklines=true,
@@ -139,5 +153,5 @@
 
 % Redefine lstinline to always use text size instead of listings size
 % (small textsize listings for easier alignment, normal textsize inlines)
-\newcommand{\lisa}[1][]{\lstinline[basicstyle=\ttfamily,language=Isar,#1]}
+\newcommand{\lisa}[1][]{\lstinline[basicstyle=\inlisafamily,language=Isar,#1]}
 % \newcommand{\lisa}[1]{\lstinline[basicstyle=\ttfamily\normalsize,language=Isar]{#1}}
