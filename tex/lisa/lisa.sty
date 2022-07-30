@@ -62,7 +62,7 @@
     _first,
     theory,begin,end,types,datatype,consts,defs,primrec,
     syntax,translations,apply,
-    lemma,theorem,corollary,definition,inductive,where,locale,context,abbreviation,
+    lemma,theorem,corollary,definition,lift_definition,inductive,where,locale,context,abbreviation,interpretation,
     done,next,proof,and,qed,
     assumes,fixes,shows,case,goal,obtains,defines,OF,in,
     fixed variables,
@@ -148,10 +148,13 @@
   breaklines=true,
   breakautoindent=false,
   backgroundcolor=\color{bgr-lightgrey},
-  keepspaces=true
+  keepspaces=true,
+  numbers=left,
+  stepnumber=2
 }
 
 % Redefine lstinline to always use text size instead of listings size
 % (small textsize listings for easier alignment, normal textsize inlines)
-\newcommand{\lisa}[1][]{\lstinline[basicstyle=\ttfamily,language=Isar,#1]}
+\newcommand{\lisa}[1][]{\lstinline[basicstyle=\ttfamily,language=Isar,breaklines=false,#1]}
+%\newcommand{\lisa}[1][]{\lstinline[basicstyle=\ttfamily,language=Isar,#1]}
 % \newcommand{\lisa}[1]{\lstinline[basicstyle=\ttfamily\normalsize,language=Isar]{#1}}
