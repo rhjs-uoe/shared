@@ -50,12 +50,13 @@
 %%% fancyref %%%
 %%%%%%%%%%%%%%%%
 \usepackage[plain]{fancyref}% tight spacing because I use abbreviated cross references, e.g. Fig. 1
-\renewcommand*{\fancyrefdefaultspacing}{\fancyreftightspacing}
 % new prefixes
 \newcommand*{\fancyrefthmlabelprefix}{thm}
 \newcommand*{\fancyrefdeflabelprefix}{def}
 \newcommand*{\fancyrefeqnlabelprefix}{eqn}
 \newcommand*{\fancyreflinelabelprefix}{line}
+% spacing used in all commands, not just the ones (re)defined below
+\renewcommand*{\fancyrefdefaultspacing}{\fancyrefloosespacing}
 % new names and formats
 \newcommand*{\Frefdefname}{Def.}
 \newcommand*{\frefdefname}{def.}
