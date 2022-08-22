@@ -1,12 +1,13 @@
 %%% single-line packages %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage[utf8]{inputenc}
-\usepackage[top=2cm,bottom=2cm,left=2cm,right=4cm]{geometry}
+\usepackage[top=2cm,bottom=2cm,left=2cm,right=4cm,includefoot]{geometry}
 \usepackage{standalone}
 %\usepackage{babel}% For multilingual/non-English documents.
 %\usepackage{csquotes}% Load if you want non-English quotes.
 %\usepackage{xpatch}% For some biblatex styles, this is required. Not for the core ones.
 %\usepackage[backend=biber,style=alphabetic]{biblatex}% Biblatex+Biber setup. Your document will now take a while to compile.
+%\usepackage{graphicx}
 
 %%% Isabelle Listings %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%
@@ -71,10 +72,13 @@
 % existing name (and format?) changes (here, shortened)
 %\renewcommand*{\Frefeqname}{Eqn.}
 \renewcommand*{\Frefsecname}{Sec.}
+\renewcommand*{\Freftabname}{Tab.}
+\renewcommand*{\Freffigname}{Fig.}
 
 %%% TiKZ %%%
 \usepackage{tikz}
 %\usetikzlibrary{arrows}
+\usetikzlibrary{cd}
 
 %%% mathtools %%%
 %%%%%%%%%%%%%%%%%
@@ -88,3 +92,4 @@
 \newcommand{\setQ}{{\mathord{\mathbb Q}}}
 \newcommand{\setR}{{\mathord{\mathbb R}}}
 \newcommand{\setC}{{\mathord{\mathbb C}}}
+\newcommand{\setH}{{\mathord{\mathbb H}}}
