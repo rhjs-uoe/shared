@@ -88,8 +88,9 @@
     {<proof>}{{\textcolor{isa-proofsnip}{\textbf{<proof>}}}}7
 %   operators and binary relations
     {\\<not>}{{$\neg$}}1
-    {\\<times>}{{$×$}}1
+    {\\<times>}{{$\times$}}1
     {\\<equiv>}{{$\equiv$}}1
+    {\\<cong>}{{$\cong$}}1
     {~=}{{$\not=$}}1
     {\\<noteq>}{{$\neq$}}1
     {\\<ge>}{{$\geq$}}1
@@ -122,8 +123,14 @@
     {\\<theta>}{{$\theta$}}1
     {\\<Theta>}{{$\Theta$}}1
     {\\<lambda>}{{$\lambda$}}1
+    {\\<chi>}{{$\chi$}}1
     {\\<triangle>}{{$\triangle$}}1
     {\\<infinity>}{{$\infty$}}1
+%		expressions with subscripts
+%TODO is there a better way of handling subscripts generally?
+    {*\\<^sub>s}{{$\texttt{*}_\texttt{s}$}}2
+    {m\\<^sub>1}{{$\texttt{m}_\texttt{1}$}}2
+    {m\\<^sub>2}{{$\texttt{m}_\texttt{2}$}}2
 %   anything else
     {\\<lbrakk>}{{$\lsemantics$}}1
     {\\<rbrakk>}{{$\rsemantics$}}1
@@ -149,8 +156,8 @@
   breakautoindent=false,
   backgroundcolor=\color{bgr-lightgrey},
   keepspaces=true,
-  numbers=left,
-  stepnumber=2
+%  numbers=left,
+%  stepnumber=2,
 }
 
 % Redefine lstinline to always use text size instead of listings size
