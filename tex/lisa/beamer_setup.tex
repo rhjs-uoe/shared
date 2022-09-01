@@ -126,3 +126,39 @@
 \newcommand{\setR}{{\mathord{\mathbb R}}}
 \newcommand{\setC}{{\mathord{\mathbb C}}}
 \newcommand{\setH}{{\mathord{\mathbb H}}}
+
+%%% Custom commands %%%
+%%%%%%%%%%%%%%%%%%%%%%%
+% Braces over multiple itemized items
+%\newcommand{\ntikzmark}[2]{#2\thinspace\tikz[overlay,remember picture,baseline=(#1.base)]{\node[inner sep=0pt] (#1) {};}}
+%\newcommand{\makebrace}[3]{%
+%    \begin{tikzpicture}[overlay, remember picture]
+%        \draw [decoration={brace,amplitude=0.5em},decorate]
+%        let \p1=(#1), \p2=(#2) in
+%        ({max(\x1,\x2)}, {\y1+0.8em}) -- node[right=0.6em] {#3} ({max(\x1,\x2)}, {\y2});
+%    \end{tikzpicture}
+%}
+\newcounter{itemnum}
+\newcommand{\nt}[2][0pt]{%
+    \stepcounter{itemnum}%
+    \if###2##%
+    \else
+        #2%
+        \thinspace
+    \fi
+    \tikz[overlay,remember picture,baseline=(\theitemnum.base),xshift=#1]\node (\theitemnum){};%
+}
+\newcommand{\makebrace}[4][0pt]{%
+    \begin{tikzpicture}[overlay, remember picture]
+        \draw [decoration={brace,amplitude=0.5em},decorate]
+        let \p1=(#2), \p2=(#3) in
+        ({max(\x1+#1,\x2+#1)}, {\y1+1.75ex}) --
+            node[right=0.6em] {#4} ({max(\x1+#1,\x2+#1)}, {\y2-0.5ex});
+    \end{tikzpicture}%
+}
+\newenvironment{braceitems}{%
+    \begin{enumerate}
+}{%
+    \end{enumerate}
+    \setcounter{itemnum}{0}%
+}
