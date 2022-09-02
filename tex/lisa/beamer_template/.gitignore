@@ -1,0 +1,10 @@
+## Usual LaTeX ignores
+*synctex*
+*.aux
+*.log
+*.out
+*.synctex
+*.vrb
+*.nav
+*.snm
+*.toc

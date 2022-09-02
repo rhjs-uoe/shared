@@ -1,0 +1,177 @@
+\documentclass[12pt,notheorems,aspectratio=169,notes,handout]{beamer}
+\input{../beamer_setup.tex}
+%
+% Choose how your presentation looks.
+%
+% For more themes, color themes and font themes, see:
+% http://deic.uab.es/~iblanes/beamer_gallery/index_by_theme.html
+%
+\mode<presentation>
+{
+  \usetheme{default}      % or try Darmstadt, Madrid, Warsaw, ...
+  \usecolortheme{default} % or try albatross, beaver, crane, beetle, seagull, dove, fly ...
+  \usefonttheme{default}  % or try serif, structurebold, ...
+  \setbeamertemplate{navigation symbols}{}
+  \setbeamertemplate{caption}[numbered]
+}
+
+\title[]{%
+  Haag-Kastler Nets in Isabelle/HOL\\%
+  \normalsize{Formalising an Algebraic Approach to\\Quantum Field Theory}}
+\author{Richard Schmoetten}
+\institute{The University of Edinburgh}
+\date{31st August 2022}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+\note{}
+
+\begin{frame}{Testing the SM}
+\begin{itemize}
+	\item<1- > Fine structure constant $\alpha^{-1} = 137.035999084(21)$ CODATA
+	\note[item]<1- >{
+		related to the scale of EM interactions \\
+		std uncertainty: $1.5 \times 10^{-10}$ \\
+		measuring polar diameter to within $0.1$ hair's width!}
+	\item<2- > Anomalous magnetic dipole of $\mathrm{e^-}$\nt{}
+	\item<3- > Recoil frequency of Cesium-133\nt{}
+	\note[item]<2- >{
+    Fine structure constant is calculated from $g-2$  measurement and calculation of $>10000$ diagrams! No more dark photons ($2.5 \sigma$). Limited by $g_e -2$ accuracy.}
+	\item<4-6> \alt<4>{In agreement...}{\alt<5>{Not in disagreement...}{Not in disagreement... As of just now!}}
+  \note[item]<4- >{
+    $<1\sigma$ tension with prior recoil measurement, $2.5\sigma$ tension with gyromag measurement. Fermilab (4/2021) brings this to $4.2\sigma$, on $g_{\mu}-2$.}
+\end{itemize}
+\begin{onlyenv}<4- >
+  \vspace{-12pt}\makebrace[5pt]{1}{2}{compare}
+\end{onlyenv}
+\end{frame}
+
+\begin{frame}{Quantum Field Theory}
+  \begin{itemize}
+    \item<1- > Framework for the different parts of the standard model.
+    \item<2- > Based on the idea of path integrals.
+    \item<3- > Many theoretical breakthroughs: renormalisation, QCD asymptotic freedom, Higgs boson, \dots
+  \end{itemize}
+  \vfill
+  \begin{overlayarea}{\textwidth}{0.35\textheight}
+    \only<2-3|handout:0>{
+      \centering
+      \includegraphics[width=0.25\linewidth]{feynman-diag-beta-decay.png}%
+      \hspace{35pt}\includegraphics[width=0.4\linewidth]{feynman-diag-higgs.png}
+    }
+    \only<4>{
+      \begin{block}{Difficulties}
+      \begin{itemize}
+        \item What exactly are the common features of the theories?
+        \item What exactly is the state space we're describing?
+        \item Divergent integrals, asymptotic ($\neq$ converging) series, \dots
+      \end{itemize}
+      \end{block}
+    }
+    \only<5|handout:0>{
+      \begin{block}{Difficulties}
+      \begin{itemize}
+        \item Axioms.
+        \item Describe measurements instead.
+        \item Starting from the axioms, use formal mathematics, and allow flexibility elsewhere instead.
+      \end{itemize}
+      \end{block}
+    }
+  \end{overlayarea}
+  \note[item]{Diagrams: \\ beta decay (mediated by weak force) \\ Higgs production}
+  \note[item]<4- >{van Howe -> different ways of quantising give different theories for the same model}
+  \note[item]<4- >{what are states? different pictures and unitary inequivalence, Haag's theorem}
+\end{frame}
+
+\begin{frame}[fragile]{Lie groups in Isabelle}
+\note[item]{Some maths incoming - not so important for this talk.}
+\begin{onlyenv}<1>
+\begin{lstlisting}
+locale lie_group =
+  m_sqr: smooth_manifold_sqr charts +
+  grp: group_on_with m_sqr.m1.carrier tms tms_one dvsn invs
+  for charts::"('a::{t2_space, second_countable_topology},
+                'e::euclidean_space) chart set"
+    and tms tms_one dvsn invs +
+  assumes smooth_mult:
+      "diff \<infinity> m_sqr.prod_charts charts (\<lambda>(a,b). tms a b)"
+    and smooth_inv:
+      "diff \<infinity> charts charts invs"
+\end{lstlisting}
+\end{onlyenv}
+\begin{onlyenv}<2|handout:0>
+\begin{lstlisting}
+locale lie_group =
+  m_sqr: smooth_manifold_sqr charts +
+  grp: group_on_with m_sqr.m1.carrier tms one +
+
+
+
+  assumes smooth_mult:
+      "diff \<infinity> (\<lambda>(a,b). tms a b)"
+    and smooth_inv:
+      "diff \<infinity> invs"
+\end{lstlisting}
+\end{onlyenv}
+\end{frame}
+
+\begin{frame}[fragile]{General Linear Group}
+\newcommand{\GL}{\ensuremath{\text{GL}}}
+\note[item]{}
+\begin{overlayarea}{\textwidth}{0.5\textheight}
+\begin{itemize}
+  \item<1- > $\GL(n,\setR)$ is the group of all invertible $n\times n$ matrices.
+  \item<3- > Elements of $\GL(n,\setR)$ represent linear operators on the vector space $\setR^n$.
+  \item<4- > The homogeneous part of $\P$ is a subgroup of $\GL(4,\setR)$.
+  \item<5-6> $\GL(n,\setR)$ is a Lie group! It is parametrised by real matrix elements\alt<5>{.}{\dots\\\vspace{10pt} \alert{But does the group structure agree with the continuous structure?}}
+\end{itemize}
+\end{overlayarea}
+\vfill
+\begin{overlayarea}{\textwidth}{0.3\textheight}
+\begin{onlyenv}<2-3>
+\begin{lstlisting}
+abbreviation "GL \<equiv>
+  {M::('a::comm_ring_1,'n::finite)square_matrix. invertible M}"
+\end{lstlisting}
+\end{onlyenv}
+\begin{onlyenv}<4- >
+\begin{lstlisting}
+abbreviation "GL \<equiv> {M::('a,'n)square_matrix. invertible M}"
+abbreviation GL\<^sub>R\<^sub>4::"(real,4)square_matrix set" where "GL\<^sub>R\<^sub>4 \<equiv> GL"
+\end{lstlisting}
+%abbreviation GL\<^sub>C\<^sub>4::"(complex,4)square_matrix set" where "GL\<^sub>C\<^sub>4 \<equiv> GL"
+\end{onlyenv}
+\end{overlayarea}
+\end{frame}
+
+\begin{frame}[fragile]{Transfer}
+The \emph{transfer} package transfers theorems between related types. Say we want to transfer a result about a type $\alpha$ to $\beta$.
+\vfill
+\begin{minipage}{0.2\textwidth}
+\begin{figure}
+  \centering
+  \begin{tikzcd}
+    \alpha \arrow[d, "f"'] \arrow[r, "\cong"] & \beta \arrow[d, "g"] \\
+    \alpha \arrow[r, "\cong"']                & \beta
+  \end{tikzcd}
+\end{figure}
+\end{minipage}\hfill\pause
+\begin{minipage}{0.7\textwidth}
+\begin{itemize}[< +- >]
+  \item $\alpha$ and $\beta$ \emph{related} by
+    $\;\cong \colon \alpha \to \beta \to \texttt{bool}$
+  \item prove $g$ maps related $f$-inputs to related $f$-outputs
+  \item prove similar \emph{transfer rules} for all constants \\
+    in the theorem to be transferred
+  \item relations can be constructed from the type of a constant
+\end{itemize}
+  \note[item]<4- >{And then it works! It works both ways too.}
+  \note[item]<5- >{This is the great contribution of transfer: generic construction for rules, and automation.}
+  \note[item]{}
+\end{minipage}
+\end{frame}
+
+\end{document}
