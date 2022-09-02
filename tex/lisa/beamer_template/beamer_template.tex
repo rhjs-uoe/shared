@@ -174,4 +174,88 @@ The \emph{transfer} package transfers theorems between related types. Say we wan
 \end{minipage}
 \end{frame}
 
+
+\begin{frame}[fragile]\frametitle{WLOG for interval endpoints}
+	Proofs mirror the structure of the preceding lemma.
+	\setbeamercovered{transparent}
+	\begin{enumerate}
+	\item<2> State the desired result
+	%\item This gives the symmetric proposition \lstinline|P| from the lemma
+	\item<3> Split up the proof into essentially distinct cases with fixed events
+	\end{enumerate}
+	\setbeamercovered{invisible}
+%	\begin{columns}
+%    \column{\dimexpr\paperwidth-50pt}
+		{\lstset{escapeinside=||}
+\begin{lstlisting}
+let ?prop = "\<lambda> I J. is_int (I\<inter>J) \<or> (I\<inter>J) = {}"
+{ fix I J a b c d
+  assume "I = interval a b" "J = interval c d"
+  { assume "betw4 a b c d"
+    have "I\<inter>J = {}" (*...*)
+  } { assume "betw4 a c b d"
+    have "I\<inter>J = interval c b" (*...*)
+  } { assume "betw4 a c d b"
+    have "I\<inter>J = interval c d" (*...*)
+  } }
+|\tikzmark{startc}|then show "is_int (I1\<inter>I2)"
+  using wlog_interval_endpoints_distinct symmetry|\tikzmark{endc}| assms
+  by simp
+\end{lstlisting}}
+\begin{tikzpicture}[remember picture,overlay]
+	\draw[red,rounded corners]
+    ([shift={(-3pt,1.65ex)}]pic cs:startc)
+      rectangle
+    ([shift={(3pt,-0.65ex)}]pic cs:endc);
+\end{tikzpicture}
+%	\end{columns}
+%	\begin{columns}
+%    \column{\dimexpr\paperwidth-50pt}
+%		{\lstset{escapeinside=||}
+%		\begin{lstlisting}
+%let ?prop = "\<lambda> I J. is_int (I\<inter>J) \<or> (I\<inter>J) = {}"
+%{ fix I J a b c d
+%  assume "I = interval a b" "J = interval c d"
+%  |\tikzmark{startd}|{ assume |\tikzmark{startd1}|"betw4 a b c d"|\tikzmark{endd1}|
+%    have "I\<inter>J = {}" (*...*)
+%  } { assume |\tikzmark{startd2}|"betw4 a c b d"|\tikzmark{endd2}|
+%    have "I\<inter>J = interval c b" (*...*)
+%  } { assume |\tikzmark{startd3}|"betw4 a c d b"|\tikzmark{endd3}|
+%    have "I\<inter>J = interval c d" (*...*)|\tikzmark{endd}|
+%  } }
+%|\tikzmark{startc}|then show "is_int (I1\<inter>I2)"
+%  using wlog_interval_endpoints_distinct symmetry|\tikzmark{endc}| assms
+%  by simp
+%		\end{lstlisting}}
+%		\only<2>{
+%			\begin{tikzpicture}[remember picture,overlay]
+%				\draw[red,rounded corners]
+%				  ([shift={(-3pt,1.65ex)}]pic cs:startc)
+%				    rectangle
+%				  ([shift={(3pt,-0.65ex)}]pic cs:endc);
+%			\end{tikzpicture}
+%		}
+%		\only<3>{
+%			\begin{tikzpicture}[remember picture,overlay]
+%				\draw[blue,rounded corners]
+%					([shift={(-3pt,1.65ex)}]pic cs:startd1)
+%					  rectangle
+%					([shift={(3pt,-.65ex)}]pic cs:endd1);
+%			\end{tikzpicture}
+%			\begin{tikzpicture}[remember picture,overlay]
+%				\draw[blue,rounded corners]
+%					([shift={(-3pt,1.65ex)}]pic cs:startd2)
+%					  rectangle
+%					([shift={(3pt,-.65ex)}]pic cs:endd2);
+%			\end{tikzpicture}
+%			\begin{tikzpicture}[remember picture,overlay]
+%				\draw[blue,rounded corners]
+%					([shift={(-3pt,1.65ex)}]pic cs:startd3)
+%					  rectangle
+%					([shift={(3pt,-.65ex)}]pic cs:endd3);
+%			\end{tikzpicture}
+%		}
+%	\end{columns}
+\end{frame}
+
 \end{document}
