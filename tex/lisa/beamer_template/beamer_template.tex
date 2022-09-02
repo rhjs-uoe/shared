@@ -198,16 +198,17 @@ let ?prop = "\<lambda> I J. is_int (I\<inter>J) \<or> (I\<inter>J) = {}"
   } { assume "betw4 a c d b"
     have "I\<inter>J = interval c d" (*...*)
   } }
-|\tikzmark{startc}|then show "is_int (I1\<inter>I2)"
-  using wlog_interval_endpoints_distinct symmetry|\tikzmark{endc}| assms
+|\tmark{}|then show "is_int (I1\<inter>I2)"
+  using wlog_interval_endpoints_distinct symmetry|\tmark{}| assms
   by simp
 \end{lstlisting}}
-\begin{tikzpicture}[remember picture,overlay]
-	\draw[red,rounded corners]
-    ([shift={(-3pt,1.65ex)}]pic cs:startc)
-      rectangle
-    ([shift={(3pt,-0.65ex)}]pic cs:endc);
-\end{tikzpicture}
+%\begin{tikzpicture}[remember picture,overlay]
+%	\draw[red,rounded corners]
+%    ([shift={(-3pt,1.65ex)}]pic cs:startc)
+%      rectangle
+%    ([shift={(3pt,-0.65ex)}]pic cs:endc);
+%\end{tikzpicture}
+\makehl{1}{2}
 %	\end{columns}
 %	\begin{columns}
 %    \column{\dimexpr\paperwidth-50pt}
