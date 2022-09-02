@@ -154,3 +154,23 @@
     \end{enumerate}
     \setcounter{itemnum}{0}%
 }
+% Borderless frame for including big images
+% TODO not well tested - may break some title bars or footers?
+% TODO may also benefit from some more refinement over just setting all margins to 0
+\newenvironment{emptyframe}
+{
+ % not too sure, but may be needed if you have a background image
+ % that should not appear on this kind of frame:
+ \setbeamertemplate{background canvas}[default]
+ % turn off navigation symbols for this frame
+ \setbeamertemplate{navigation symbols}{}
+ % locally set margins to zero: (notice the use of \bgroup ... \egroup
+ % to limit the scope of the geometry restriction
+ % where curly brackets {} aren't possible)
+ \bgroup \newgeometry{margin=0cm}
+ \begin{frame}[plain]
+}
+{
+ \end{frame}
+ \egroup
+}
