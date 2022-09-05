@@ -194,3 +194,11 @@
           ({\x2+3pt}, {\y2-0.65ex});
     \end{tikzpicture}%
 }
+% footnote without label, e.g. for same-slide references
+\newcommand{\nolabelfootnote}[1]{%
+  \begingroup
+  \renewcommand{\thefootnote}{}
+  \footnote[frame]{\hspace{-18pt}\tiny#1}%
+  \addtocounter{footnote}{-1}%
+  \endgroup
+}
