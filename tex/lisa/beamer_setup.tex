@@ -176,32 +176,21 @@
  \egroup
 }
 % Drawing rectangles to highlight parts of listings
-
 \newcounter{lstmark}
 \newcommand{\tmark}[2][0pt]{%tikzmark
     \stepcounter{lstmark}%
     \if###2##%
     \else
         #2%
-%        \thinspace
     \fi
     \tikz[overlay,remember picture]\node (\thelstmark){};%
 }
 \newcommand{\makehl}[3][0pt]{%make highlight
     \begin{tikzpicture}[overlay, remember picture]
-%        \draw [decoration={brace,amplitude=0.5em},decorate]
-%        let \p1=(#2), \p2=(#3) in
-%        ({max(\x1+#1,\x2+#1)}, {\y1+1.75ex}) --
-%            node[right=0.6em] {#4} ({max(\x1+#1,\x2+#1)}, {\y2-0.5ex});
         \draw[red,rounded corners]
           let \p1=(#2), \p2=(#3) in
-%          ([shift={(-3pt,1.65ex)}] \p1)
           ({\x1-3pt}, {\y1+1.65ex})
             rectangle
-%          ([shift={(3pt,-0.65ex)}] \p2);
           ({\x2+3pt}, {\y2-0.65ex});
-%				  ([shift={(-3pt,1.65ex)}]pic cs:startc)
-%				    rectangle
-%				  ([shift={(3pt,-0.65ex)}]pic cs:endc);
     \end{tikzpicture}%
 }
