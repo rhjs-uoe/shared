@@ -1,0 +1,82 @@
+\input{setup_shared}
+
+%%% single-line packages %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{setspace}% For adjusting spacing between lines\comment{text}{comment}
+
+%%% Custom commands %%%
+%%%%%%%%%%%%%%%%%%%%%%%
+
+% Borderless frame for including big images
+% TODO not well tested - may break some title bars or footers?
+% TODO may also benefit from some more refinement over just setting all margins to 0
+\newenvironment{emptyframe}
+{
+ % not too sure, but may be needed if you have a background image
+ % that should not appear on this kind of frame:
+ \setbeamertemplate{background canvas}[default]
+ % turn off navigation symbols for this frame
+ \setbeamertemplate{navigation symbols}{}
+ % locally set margins to zero: (notice the use of \bgroup ... \egroup
+ % to limit the scope of the geometry restriction
+ % where curly brackets {} aren't possible)
+ \bgroup \newgeometry{margin=0cm}
+ \begin{frame}[plain]
+}
+{
+ \end{frame}
+ \egroup
+}
+
+% footnote without label, e.g. for same-slide references
+\newcommand{\nolabelfootnote}[1]{%
+  \begingroup
+  \renewcommand{\thefootnote}{}
+  \footnote[frame]{\hspace{-18pt}\tiny#1}%
+  \addtocounter{footnote}{-1}%
+  \endgroup
+}
+
+% Improved version of \alt. Keeps constant width to avoid jiggling slides.
+% https://tex.stackexchange.com/questions/13793/beamer-alt-command-like-visible-instead-of-like-only
+\makeatletter
+% Detect mode. mathpalette is used to detect the used math style
+\newcommand<>\Alt[2]{%
+    \begingroup
+    \ifmmode
+        \expandafter\mathpalette
+        \expandafter\math@Alt
+    \else
+        \expandafter\make@Alt
+    \fi
+    {{#1}{#2}{#3}}%
+    \endgroup
+}
+% Un-brace the second argument (required because \mathpalette reads the three arguments as one
+\newcommand\math@Alt[2]{\math@@Alt{#1}#2}
+% Set the two arguments in boxes. The math style is given by #1. \m@th sets \mathsurround to 0.
+\newcommand\math@@Alt[3]{%
+    \setbox\z@ \hbox{$\m@th #1{#2}$}%
+    \setbox\@ne\hbox{$\m@th #1{#3}$}%
+    \@Alt
+}
+% Un-brace the argument
+\newcommand\make@Alt[1]{\make@@Alt#1}
+% Set the two arguments into normal boxes
+\newcommand\make@@Alt[2]{%
+    \sbox\z@ {#1}%
+    \sbox\@ne{#2}%
+    \@Alt
+}
+% Place one of the two boxes using \rlap and place a \phantom box with the maximum of the two boxes
+\newcommand\@Alt[1]{%
+    \alt#1%
+        {\rlap{\usebox0}}%
+        {\rlap{\usebox1}}%
+    \setbox\tw@\null
+    \ht\tw@\ifnum\ht\z@>\ht\@ne\ht\z@\else\ht\@ne\fi
+    \dp\tw@\ifnum\dp\z@>\dp\@ne\dp\z@\else\dp\@ne\fi
+    \wd\tw@\ifnum\wd\z@>\wd\@ne\wd\z@\else\wd\@ne\fi
+    \box\tw@
+}
+\makeatother

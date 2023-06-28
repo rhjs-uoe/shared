@@ -54,6 +54,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\lsemantics}{\mathopen{\lbrack\mkern-3mu\lbrack}}
 \newcommand{\rsemantics}{\mathclose{\rbrack\mkern-3mu\rbrack}}
+\newcommand{\psub}[1]{\ensuremath{\phantom{}_{\texttt{#1}}}}
+\newcommand{\psup}[1]{\ensuremath{\phantom{}^{\texttt{#1}}}}
 
 % new language
 \lstdefinelanguage{Isar}%
@@ -61,10 +63,11 @@
   morekeywords=[2]{
     _first,
     theory,begin,end,types,datatype,consts,defs,primrec,
+    typedef,overloaded,quotient_type,class,
     syntax,translations,apply,
-    lemma,theorem,corollary,definition,inductive,where,locale,context,abbreviation,
+    lemma,theorem,corollary,definition,lift_definition,inductive,where,locale,sublocale,context,abbreviation,interpretation,
     done,next,proof,and,qed,
-    assumes,fixes,shows,case,goal,obtains,defines,OF,in,
+    assumes,fixes,shows,case,goal,obtains,defines,OF,in,includes,
     fixed variables,
     _last
   },
@@ -74,8 +77,8 @@
   },
   keywordstyle={[3]\bfseries\color{isa-kwcolor-3}},
   morekeywords=[4]{
-    then,this,thus,hence,have,assume,obtain,moreover,fix,show,by,using,unfolding,
-    ultimately,let,if,for,else,consider
+    then,from,this,thus,hence,have,assume,obtain,moreover,fix,show,by,using,unfolding,
+    ultimately,let,if,for,else,consider,define
   },
   keywordstyle={[4]\bfseries\color{isa-kwcolor-4}},
   sensitive=true,
@@ -88,15 +91,20 @@
     {<proof>}{{\textcolor{isa-proofsnip}{\textbf{<proof>}}}}7
 %   operators and binary relations
     {\\<not>}{{$\neg$}}1
-    {\\<times>}{{$×$}}1
+    {\\<times>}{{$\times$}}1
     {\\<equiv>}{{$\equiv$}}1
+    {\\<simeq>}{{$\simeq$}}1
+    {\\<cong>}{{$\cong$}}1
     {~=}{{$\not=$}}1
     {\\<noteq>}{{$\neq$}}1
+    {\\<doteq>}{{$\doteq$}}1
     {\\<ge>}{{$\geq$}}1
     {\\<le>}{{$\leq$}}1
     {\\<parallel>}{{$\parallel$}}1
     {\\<and>}{{$\land$}}1
     {\\<or>}{{$\lor$}}1
+    {\\<circ>}{{$\circ$}}1
+    {\\<Zspot>}{{$\bullet$}}1
 %   sets
     {\\<in>}{{$\in$}}1
     {\\<notin>}{{$\notin$}}1
@@ -105,9 +113,12 @@
     {\\<inter>}{{$\cap$}}1
     {\\<emptyset>}{{$\emptyset$}}1
     {\\<subseteq>}{{$\subseteq$}}1
+    {\\<Prod>}{{$\prod$}}2
+    {\\<Sum>}{{$\sum$}}2
 %   arrows
     {\\<Rightarrow>}{{$\Rightarrow$}}2%
     {\\<rightleftharpoons>}{{$\rightleftharpoons$}}2
+    {\\<rightharpoonup>}{{$\rightharpoonup$}}2
     {\\<Longrightarrow>}{{$\Longrightarrow$}}3
     {\\<longrightarrow>}{{$\longrightarrow$}}3
     {\\<leftrightarrow>}{{$\leftrightarrow$}}2
@@ -115,6 +126,7 @@
     {\\<leadsto>}{{$\rightsquigarrow$}}2
 %   unary operators
     {\\<exists>}{{$\exists$}}1
+    {\\<nexists>}{{$\nexists$}}1
     {\\<forall>}{{$\forall$}}1
     {\\<bigwedge>}{{$\bigwedge$}}1
     {\\<And>}{{$\bigwedge$}}1
@@ -122,8 +134,37 @@
     {\\<theta>}{{$\theta$}}1
     {\\<Theta>}{{$\Theta$}}1
     {\\<lambda>}{{$\lambda$}}1
+    {\\<chi>}{{$\chi$}}1
+    {\\<rho>}{{$\rho$}}1
     {\\<triangle>}{{$\triangle$}}1
     {\\<infinity>}{{$\infty$}}1
+    {\\<gg>}{{$\mathfrak g$}}1
+    {\\<one>}{{$\mathfrak 1$}}1
+%		expressions with subscripts
+%TODO is there a better way of handling subscripts generally?
+    {\\<^sup>2}{{$\psup{2}$}}1
+    {\\<^sub>1}{{$\psub{1}$}}1
+    {\\<^sub>2}{{$\psub{2}$}}1
+    {\\<^sub>3}{{$\psub{3}$}}1
+    {\\<^sub>4}{{$\psub{4}$}}1
+    {\\<^sub>s}{{$\psub{s}$}}1
+    {\\<^sub>S}{{$\psub{S}$}}1
+    {\\<^sub>R}{{$\psub{R}$}}1
+    {\\<^sub>r}{{$\psub{r}$}}1
+    {\\<^sub>i}{{$\psub{i}$}}1
+%    {*\\<^sub>s}{{$\texttt{*}_\texttt{s}$}}2
+%    {m\\<^sub>1}{{$\texttt{m}_\texttt{1}$}}2
+%    {m\\<^sub>2}{{$\texttt{m}_\texttt{2}$}}2
+%    {c\\<^sub>1}{{$\texttt{c}_\texttt{1}$}}2
+%    {c\\<^sub>2}{{$\texttt{c}_\texttt{2}$}}2
+    {GL\\<^sub>R\\<^sub>4}{{$\text{GL}_\mathrm{R4}$}}4
+    {GL\\<^sub>C\\<^sub>4}{{$\text{GL}_\mathrm{C4}$}}4
+%    {*\\<^sub>S}{{$\texttt{*}_\texttt{S}$}}2
+%    {*\\<^sub>R}{{$\texttt{*}_\texttt{R}$}}2
+%    {r\\<^sub>r}{{$\texttt{r}_\texttt{r}$}}2
+%    {N\\<^sub>r}{{$\texttt{N}_\texttt{r}$}}2
+%    {r\\<^sub>i}{{$\texttt{r}_\texttt{i}$}}2
+%    {N\\<^sub>i}{{$\texttt{N}_\texttt{i}$}}2
 %   anything else
     {\\<lbrakk>}{{$\lsemantics$}}1
     {\\<rbrakk>}{{$\rsemantics$}}1
@@ -148,10 +189,13 @@
   breaklines=true,
   breakautoindent=false,
   backgroundcolor=\color{bgr-lightgrey},
-  keepspaces=true
+  keepspaces=true,
+%  numbers=left,
+%  stepnumber=2,
 }
 
 % Redefine lstinline to always use text size instead of listings size
 % (small textsize listings for easier alignment, normal textsize inlines)
-\newcommand{\lisa}[1][]{\lstinline[basicstyle=\ttfamily,language=Isar,#1]}
+\newcommand{\lisa}[1][]{\lstinline[basicstyle=\ttfamily,language=Isar,breaklines=false,#1]}
+%\newcommand{\lisa}[1][]{\lstinline[basicstyle=\ttfamily,language=Isar,#1]}
 % \newcommand{\lisa}[1]{\lstinline[basicstyle=\ttfamily\normalsize,language=Isar]{#1}}
