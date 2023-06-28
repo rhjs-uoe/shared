@@ -120,6 +120,11 @@
 \DeclarePairedDelimiter{\all}{\forall}{.\quad}
 \DeclarePairedDelimiter{\any}{\exists}{.\quad}
 
+%%% strikeout in math mode %%%
+% from : https://tex.stackexchange.com/a/20613
+\newcommand\hcancel[2][black]{\setbox0=\hbox{$#2$}%
+\rlap{\raisebox{.45\ht0}{\textcolor{#1}{\rule{\wd0}{1pt}}}}#2}
+
 
 \newcommand{\setN}{{\mathord{\mathbb N}}}
 \newcommand{\setZ}{{\mathord{\mathbb Z}}}
@@ -130,6 +135,7 @@
 
 %%% Custom commands %%%
 %%%%%%%%%%%%%%%%%%%%%%%
+
 % Braces over multiple itemized items
 \newcounter{itemnum}
 \newcommand{\nt}[2][0pt]{%
@@ -155,6 +161,7 @@
     \end{enumerate}
     \setcounter{itemnum}{0}%
 }
+
 % Borderless frame for including big images
 % TODO not well tested - may break some title bars or footers?
 % TODO may also benefit from some more refinement over just setting all margins to 0
@@ -175,6 +182,7 @@
  \end{frame}
  \egroup
 }
+
 % Drawing rectangles to highlight parts of listings
 \newcounter{lstmark}
 \newcommand{\tmark}[2][0pt]{%tikzmark
@@ -194,6 +202,7 @@
           ({\x2+3pt}, {\y2-0.65ex});
     \end{tikzpicture}%
 }
+
 % footnote without label, e.g. for same-slide references
 \newcommand{\nolabelfootnote}[1]{%
   \begingroup
@@ -202,3 +211,53 @@
   \addtocounter{footnote}{-1}%
   \endgroup
 }
+
+% Improved version of \alt. Keeps constant width to avoid jiggling slides.
+% https://tex.stackexchange.com/questions/13793/beamer-alt-command-like-visible-instead-of-like-only
+\makeatletter
+% Detect mode. mathpalette is used to detect the used math style
+\newcommand<>\Alt[2]{%
+    \begingroup
+    \ifmmode
+        \expandafter\mathpalette
+        \expandafter\math@Alt
+    \else
+        \expandafter\make@Alt
+    \fi
+    {{#1}{#2}{#3}}%
+    \endgroup
+}
+% Un-brace the second argument (required because \mathpalette reads the three arguments as one
+\newcommand\math@Alt[2]{\math@@Alt{#1}#2}
+% Set the two arguments in boxes. The math style is given by #1. \m@th sets \mathsurround to 0.
+\newcommand\math@@Alt[3]{%
+    \setbox\z@ \hbox{$\m@th #1{#2}$}%
+    \setbox\@ne\hbox{$\m@th #1{#3}$}%
+    \@Alt
+}
+% Un-brace the argument
+\newcommand\make@Alt[1]{\make@@Alt#1}
+% Set the two arguments into normal boxes
+\newcommand\make@@Alt[2]{%
+    \sbox\z@ {#1}%
+    \sbox\@ne{#2}%
+    \@Alt
+}
+% Place one of the two boxes using \rlap and place a \phantom box with the maximum of the two boxes
+\newcommand\@Alt[1]{%
+    \alt#1%
+        {\rlap{\usebox0}}%
+        {\rlap{\usebox1}}%
+    \setbox\tw@\null
+    \ht\tw@\ifnum\ht\z@>\ht\@ne\ht\z@\else\ht\@ne\fi
+    \dp\tw@\ifnum\dp\z@>\dp\@ne\dp\z@\else\dp\@ne\fi
+    \wd\tw@\ifnum\wd\z@>\wd\@ne\wd\z@\else\wd\@ne\fi
+    \box\tw@
+}
+\makeatother
+
+
+
+\def\ie/{\textit{i}.\textit{e}.}
+\def\eg/{\textit{e}.\textit{g}.}
+\def\cf/{\textit{cf}.}

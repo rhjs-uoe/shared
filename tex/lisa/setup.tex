@@ -3,6 +3,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[top=2cm,bottom=2cm,left=2cm,right=4cm,includefoot]{geometry}
 \usepackage{standalone}
+\usepackage{todonotes}
 %\usepackage{babel}% For multilingual/non-English documents.
 %\usepackage{csquotes}% Load if you want non-English quotes.
 %\usepackage{xpatch}% For some biblatex styles, this is required. Not for the core ones.
@@ -27,6 +28,7 @@
 %%% AMS packages %%%
 %%%%%%%%%%%%%%%%%%%%
 \usepackage{physics}% includes amsmath, great for \bra and \ket etc.
+\usepackage{mathtools}
 \usepackage{amsthm}
 % additional symbol definitions
 \newcommand\restr[2]{{% we make the whole thing an ordinary symbol
@@ -36,13 +38,20 @@
   \right|_{#2} % this is the delimiter
 }}
 % Environment definitions, mostly standard
+\theoremstyle{plain}% default
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem*{corollary}{Corollary}
+
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}[section]
 \newtheorem{axiom}{Axiom}[section]
 \newtheorem{example}{Example}[section]
 \newtheorem{exercise}[example]{Exercise}
+
 \theoremstyle{remark}
-\newtheorem*{rem}{Remark}
+\newtheorem*{remark}{Remark}
 \newtheorem*{note}{Note}
 
 
@@ -80,6 +89,8 @@
 % new prefixes
 \newcommand*{\fancyrefthmlabelprefix}{thm}
 \newcommand*{\fancyrefdeflabelprefix}{def}
+\newcommand*{\fancyreflemlabelprefix}{lem}
+\newcommand*{\fancyrefapplabelprefix}{app}
 \newcommand*{\fancyrefeqnlabelprefix}{eqn}
 \newcommand*{\fancyreflinelabelprefix}{line}
 % spacing used in all commands, not just the ones (re)defined below
@@ -89,10 +100,18 @@
 \newcommand*{\frefdefname}{definition}
 \frefformat{plain}{\fancyrefdeflabelprefix}{\frefdefname\fancyrefdefaultspacing#1}
 \Frefformat{plain}{\fancyrefdeflabelprefix}{\Frefdefname\fancyrefdefaultspacing#1}
+\newcommand*{\Frefappname}{Appendix}
+\newcommand*{\frefappname}{appendix}
+\frefformat{plain}{\fancyrefapplabelprefix}{\frefappname\fancyrefdefaultspacing#1}
+\Frefformat{plain}{\fancyrefapplabelprefix}{\Frefappname\fancyrefdefaultspacing#1}
 \newcommand*{\Frefeqnname}{Equation}
 \newcommand*{\frefeqnname}{equation}
 \frefformat{plain}{\fancyrefeqnlabelprefix}{\frefeqnname\fancyrefdefaultspacing#1}
 \Frefformat{plain}{\fancyrefeqnlabelprefix}{\Frefeqnname\fancyrefdefaultspacing#1}
+\newcommand*{\Freflemname}{Lemma}
+\newcommand*{\freflemname}{lemma}
+\frefformat{plain}{\fancyreflemlabelprefix}{\freflemname\fancyrefdefaultspacing#1}
+\Frefformat{plain}{\fancyreflemlabelprefix}{\Freflemname\fancyrefdefaultspacing#1}
 \newcommand*{\Freflinename}{Line}
 \newcommand*{\freflinename}{line}
 \frefformat{plain}{\fancyreflinelabelprefix}{\freflinename\fancyrefloosespacing#1}
@@ -123,3 +142,7 @@
 \newcommand{\setR}{{\mathord{\mathbb R}}}
 \newcommand{\setC}{{\mathord{\mathbb C}}}
 \newcommand{\setH}{{\mathord{\mathbb H}}}
+
+\def\ie/{\textit{i}.\textit{e}.}
+\def\eg/{\textit{e}.\textit{g}.}
+\def\cf/{\textit{cf}.}
