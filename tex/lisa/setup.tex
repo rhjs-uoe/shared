@@ -1,5 +1,11 @@
-\input{setup_shared}
+\input{C:/Users/Richard/uoe-shared/tex/lisa/setup_shared.tex}
 
 %%% single-line packages %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage[top=2cm,bottom=2cm,left=2cm,right=4cm,includefoot]{geometry}
+\usepackage[top=2cm,bottom=2cm,left=2cm,right=5cm,includefoot]{geometry}
+
+%%% TODO package %%%
+%%%%%%%%%%%%%%%%%%%%
+\usepackage[textwidth=4.5cm]{todonotes}
+\newcommand{\jtodo}[2][]{\todo[color=red!70,#1]{#2}}  % For Jacques's comments
+\newcommand{\itodo}[2][]{\todo[inline,#1]{ISABELLE: \lisa|#2|}}  % For missing isabelle listings (give name as argument)

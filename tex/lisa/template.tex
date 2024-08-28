@@ -1,6 +1,8 @@
 \documentclass[]{article}
 
 \input{C:/Users/Richard/uoe-shared/tex/lisa/setup.tex}
+\usepackage[backend=biber,style=authoryear]{biblatex}
+\addbibresource{C:/Users/Richard/library/refs-biblatex.bib}
 
 %opening
 \title{Template Example}
@@ -11,5 +13,9 @@
 \maketitle
 
 The \lisa|setup.tex| file already has a bunch of configuration and packages. Just correct the path in the \lisa|\input| statement in the preamble if you ever change the location of the shared repo.
+
+
+%\newpage
+\printbibliography
 
 \end{document}

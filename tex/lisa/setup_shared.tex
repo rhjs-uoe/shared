@@ -2,7 +2,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage[utf8]{inputenc}
 \usepackage{standalone}
-\usepackage{todonotes}
 %\usepackage{babel}% For multilingual/non-English documents.
 %\usepackage{csquotes}% Load if you want non-English quotes.
 %\usepackage{xpatch}% For some biblatex styles, this is required. Not for the core ones.
@@ -111,6 +110,10 @@
 \newcommand*{\freflemname}{lemma}
 \frefformat{plain}{\fancyreflemlabelprefix}{\freflemname\fancyrefdefaultspacing#1}
 \Frefformat{plain}{\fancyreflemlabelprefix}{\Freflemname\fancyrefdefaultspacing#1}
+\newcommand*{\Frefthmname}{Theorem}
+\newcommand*{\frefthmname}{theorem}
+\frefformat{plain}{\fancyrefthmlabelprefix}{\frefthmname\fancyrefdefaultspacing#1}
+\Frefformat{plain}{\fancyrefthmlabelprefix}{\Frefthmname\fancyrefdefaultspacing#1}
 \newcommand*{\Freflinename}{Line}
 \newcommand*{\freflinename}{line}
 \frefformat{plain}{\fancyreflinelabelprefix}{\freflinename\fancyrefloosespacing#1}

@@ -63,10 +63,10 @@
   morekeywords=[2]{
     _first,
     theory,begin,end,types,datatype,consts,defs,primrec,
-    typedef,overloaded,quotient_type,class,
-    syntax,translations,apply,
-    lemma,theorem,corollary,definition,lift_definition,inductive,where,locale,sublocale,context,abbreviation,interpretation,
-    done,next,proof,and,qed,
+    typedef,overloaded,quotient_type,class,instance,instantiation,
+    syntax,translations,apply,subgoal,done,
+    lemma,theorem,corollary,definition,lift_definition,inductive,where,locale,sublocale,context,abbreviation,interpretation,notation,
+    next,proof,and,qed,
     assumes,fixes,shows,case,goal,obtains,defines,OF,in,includes,
     fixed variables,
     _last
@@ -77,7 +77,7 @@
   },
   keywordstyle={[3]\bfseries\color{isa-kwcolor-3}},
   morekeywords=[4]{
-    then,from,this,thus,hence,have,assume,obtain,moreover,fix,show,by,using,unfolding,
+    then,from,this,thus,hence,have,also,assume,obtain,moreover,fix,show,by,using,unfolding,
     ultimately,let,if,for,else,consider,define
   },
   keywordstyle={[4]\bfseries\color{isa-kwcolor-4}},
@@ -89,6 +89,38 @@
 %   snipping
     {(*...*)}{{\textcolor{isa-proofsnip}{\textbf{...}}}}3
     {<proof>}{{\textcolor{isa-proofsnip}{\textbf{<proof>}}}}7
+%		expressions with subscripts
+%TODO is there a better way of handling subscripts generally?
+    {\\<inverse>}{{$\psup{-1}$}}1
+    {\\<^sup>2}{{$\psup{2}$}}1
+    {\\<^sup>\\<dagger>}{{$\phantom{}^{\dagger}$}}1
+    {\\<^sub>1}{{$\psub{1}$}}1
+    {\\<^sub>2}{{$\psub{2}$}}1
+    {\\<^sub>3}{{$\psub{3}$}}1
+    {\\<^sub>4}{{$\psub{4}$}}1
+    {\\<^sub>s}{{$\psub{s}$}}1
+    {\\<^sub>S}{{$\psub{S}$}}1
+    {\\<^sub>R}{{$\psub{R}$}}1
+    {\\<^sub>r}{{$\psub{r}$}}1
+    {\\<^sub>i}{{$\psub{i}$}}1
+    {\\<^sub>p}{{$\psub{p}$}}1
+    {\\<^sub>\\<psi>}{{$\psub{\psi}$}}1
+    {*\\<^sub>C}{{$*_{\mathbb C}$}}1
+%    {*\\<^sub>s}{{$\texttt{*}_\texttt{s}$}}2
+%    {m\\<^sub>1}{{$\texttt{m}_\texttt{1}$}}2
+%    {m\\<^sub>2}{{$\texttt{m}_\texttt{2}$}}2
+%    {c\\<^sub>1}{{$\texttt{c}_\texttt{1}$}}2
+%    {c\\<^sub>2}{{$\texttt{c}_\texttt{2}$}}2
+    {GL\\<^sub>R\\<^sub>4}{{$\text{GL}_\mathrm{R4}$}}4
+    {GL\\<^sub>C\\<^sub>4}{{$\text{GL}_\mathrm{C4}$}}4
+    {T\\<^sub>\\<psi>\\<^sub>pE}{{$\mathrm{T}_{\psi \mathrm{p}}\mathrm{E}$}}4
+    {T\\<^sub>\\<psi>\\<^sub>p\\<psi>U}{{$\mathrm{T}_{\psi \mathrm{p}}\psi \mathrm{U}$}}6
+%    {*\\<^sub>S}{{$\texttt{*}_\texttt{S}$}}2
+%    {*\\<^sub>R}{{$\texttt{*}_\texttt{R}$}}2
+%    {r\\<^sub>r}{{$\texttt{r}_\texttt{r}$}}2
+%    {N\\<^sub>r}{{$\texttt{N}_\texttt{r}$}}2
+%    {r\\<^sub>i}{{$\texttt{r}_\texttt{i}$}}2
+%    {N\\<^sub>i}{{$\texttt{N}_\texttt{i}$}}2
 %   operators and binary relations
     {\\<not>}{{$\neg$}}1
     {\\<times>}{{$\times$}}1
@@ -101,10 +133,15 @@
     {\\<ge>}{{$\geq$}}1
     {\\<le>}{{$\leq$}}1
     {\\<parallel>}{{$\parallel$}}1
+    {\\<Parallel>}{{$\parallel$}}1 % TODO: get a bold for this?
     {\\<and>}{{$\land$}}1
     {\\<or>}{{$\lor$}}1
     {\\<circ>}{{$\circ$}}1
     {\\<Zspot>}{{$\bullet$}}1
+    {\\<bullet>}{{$\bullet$}}1
+    {\\<hungarumlaut>}{{$\diamond$}}1 % TODO bad fit - replace?
+    {\\<restriction>}{{$\upharpoonright$}}1
+    {\\<dots>}{{\dots}}1
 %   sets
     {\\<in>}{{$\in$}}1
     {\\<notin>}{{$\notin$}}1
@@ -134,42 +171,26 @@
     {\\<theta>}{{$\theta$}}1
     {\\<Theta>}{{$\Theta$}}1
     {\\<lambda>}{{$\lambda$}}1
+    {\\<iota>}{{$\iota$}}1
+    {\\<kappa>}{{$\kappa$}}1
     {\\<chi>}{{$\chi$}}1
     {\\<rho>}{{$\rho$}}1
+    {\\<omega>}{{$\omega$}}1
+    {\\<psi>}{{$\psi$}}1
     {\\<triangle>}{{$\triangle$}}1
-    {\\<infinity>}{{$\infty$}}1
+    {\\<infinity>}{{$\infty$}}2
     {\\<gg>}{{$\mathfrak g$}}1
+    {\\<hh>}{{$\mathfrak h$}}1
+    {\\<XX>}{{$\mathfrak X$}}1
+    {\\<L>}{{$\mathcal L$}}1
     {\\<one>}{{$\mathfrak 1$}}1
-%		expressions with subscripts
-%TODO is there a better way of handling subscripts generally?
-    {\\<^sup>2}{{$\psup{2}$}}1
-    {\\<^sub>1}{{$\psub{1}$}}1
-    {\\<^sub>2}{{$\psub{2}$}}1
-    {\\<^sub>3}{{$\psub{3}$}}1
-    {\\<^sub>4}{{$\psub{4}$}}1
-    {\\<^sub>s}{{$\psub{s}$}}1
-    {\\<^sub>S}{{$\psub{S}$}}1
-    {\\<^sub>R}{{$\psub{R}$}}1
-    {\\<^sub>r}{{$\psub{r}$}}1
-    {\\<^sub>i}{{$\psub{i}$}}1
-%    {*\\<^sub>s}{{$\texttt{*}_\texttt{s}$}}2
-%    {m\\<^sub>1}{{$\texttt{m}_\texttt{1}$}}2
-%    {m\\<^sub>2}{{$\texttt{m}_\texttt{2}$}}2
-%    {c\\<^sub>1}{{$\texttt{c}_\texttt{1}$}}2
-%    {c\\<^sub>2}{{$\texttt{c}_\texttt{2}$}}2
-    {GL\\<^sub>R\\<^sub>4}{{$\text{GL}_\mathrm{R4}$}}4
-    {GL\\<^sub>C\\<^sub>4}{{$\text{GL}_\mathrm{C4}$}}4
-%    {*\\<^sub>S}{{$\texttt{*}_\texttt{S}$}}2
-%    {*\\<^sub>R}{{$\texttt{*}_\texttt{R}$}}2
-%    {r\\<^sub>r}{{$\texttt{r}_\texttt{r}$}}2
-%    {N\\<^sub>r}{{$\texttt{N}_\texttt{r}$}}2
-%    {r\\<^sub>i}{{$\texttt{r}_\texttt{i}$}}2
-%    {N\\<^sub>i}{{$\texttt{N}_\texttt{i}$}}2
 %   anything else
     {\\<lbrakk>}{{$\lsemantics$}}1
     {\\<rbrakk>}{{$\rsemantics$}}1
     {\\<open>}{{$\langle$}}1
     {\\<close>}{{$\rangle$}}1
+    {\\<langle>}{{$\langle$}}1
+    {\\<rangle>}{{$\rangle$}}1
 %    {\\<\^cancel>}{{\%}}1
 %    {\\<\^sub>}{{\_}}1
 %    {ü}{"u}1 {ä}{"a}1 {ö}{"o}1
@@ -199,3 +220,11 @@
 \newcommand{\lisa}[1][]{\lstinline[basicstyle=\ttfamily,language=Isar,breaklines=false,#1]}
 %\newcommand{\lisa}[1][]{\lstinline[basicstyle=\ttfamily,language=Isar,#1]}
 % \newcommand{\lisa}[1]{\lstinline[basicstyle=\ttfamily\normalsize,language=Isar]{#1}}
+
+% extra key for adding literates to lstset without forgetting all previous ones
+% https://tex.stackexchange.com/questions/149056/how-can-i-define-additional-literate-replacements-without-deleting-existing-ones
+% see also https://tex.stackexchange.com/questions/202331/multiple-literates-in-a-listings-style-definition
+\makeatletter
+\def\addToLiterate#1{\edef\lst@literate{\unexpanded\expandafter{\lst@literate}\unexpanded{#1}}}
+\lst@Key{moreliterate}{}{\addToLiterate{#1}}
+\makeatother

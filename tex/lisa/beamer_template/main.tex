@@ -1,0 +1,242 @@
+\documentclass[12pt,notheorems,aspectratio=169,handout]{beamer} % notes, handout
+
+\newcommand{\lisaTeX}{C:/Users/Richard/uoe-shared/tex/lisa}
+\input{\lisaTeX/setup_beamer}
+
+\usepackage[backend=biber,style=alphabetic]{biblatex}
+\addbibresource{C:/Users/Richard/library/refs-biblatex.bib}
+
+%\usepackage{todonotes}
+\usepackage{pgfgantt}
+
+\usetikzlibrary{mindmap,fit,backgrounds}
+\usetikzlibrary{decorations.pathreplacing,calc}
+
+%\newcommand{\M}{\ensuremath{\mathbb M}}
+%\newcommand{\A}{\ensuremath{\mathcal A}}
+\newcommand{\id}{\ensuremath{\text{id}}}
+%\newcommand{\T}{\ensuremath{\mathcal T}}
+%\renewcommand{\P}{\ensuremath{\mathcal{P}_0}}
+%\renewcommand{\L}{\ensuremath{\mathcal L}}
+%\renewcommand{\O}{\ensuremath{\mathcal O}}
+\newcommand{\Diff}{\ensuremath{\mathrm{Diff}}}
+\newcommand{\GL}{\ensuremath{\text{GL}}}
+\newcommand{\SL}{\ensuremath{\text{SL}}}
+
+\newcommand{\orange}{\color{orange}}
+\newcommand{\red}{\color{red}}
+\newcommand{\green}{\color{green}}
+
+\hypersetup{linkcolor=black}
+
+
+%
+% Choose how your presentation looks.
+%
+% For more themes, color themes and font themes, see:
+% http://deic.uab.es/~iblanes/beamer_gallery/index_by_theme.html
+%
+\mode<presentation>
+{
+  \usetheme{SimplePlus}      % or try Darmstadt, Madrid, Warsaw, ...
+%   \usecolortheme{default} % or try albatross, beaver, crane, beetle, seagull, dove, fly ...
+  \usefonttheme{default}  % or try serif, structurebold, ...
+  \setbeamertemplate{navigation symbols}{}
+  \setbeamertemplate{caption}[numbered]
+}
+
+%\usepackage[english]{babel}
+%\usepackage[utf8x]{inputenc}
+%\usepackage[]{amsmath, amsthm}
+%\usepackage{cite}
+%\usepackage{standalone}
+%\usepackage[labelformat=empty, font=small]{caption}
+%\usepackage{tikz}
+%\usepackage{xcolor}
+%\usetikzlibrary{arrows}
+
+\title[]{%
+  From Lie algebras to Frobenius's Theorem\\%
+  \normalsize{Algebraic Formalisation with locales, types and relations}}
+\author{Richard Schmoetten}
+\institute{The University of Edinburgh}
+\date{27th June 2023}
+
+\begin{document}
+
+\input{appearance}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+\note{}
+
+
+%%%%%%%%%%%%%%
+%%% Part 1 %%%
+%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]\frametitle{Lie Groups and Algebras}
+\note[item]{We've talked about groups and manifolds: a Lie group is both.}
+\begin{overlayarea}{\textwidth}{.4\textheight}
+\begin{itemize}[< +- >]
+\item<1- > A Lie group is a manifold that is also a group under a smooth operation $(x,y) \mapsto xy$ with smooth inverses $x \mapsto x^{-1}$.
+\item<1- > A Lie algebra is anticommutative and obeys the Jacobi identity:
+  \[\forall x,y,z \in \mathfrak g: \qquad [x, [y, z]] + [y, [z, x]] + [z, [x, y]] = 0\]
+\item<1- |handout:0> The only obvious link between these definitions is their name...
+\item<4- |handout:0> ... but we can (will) prove that every Lie group gives rise to a Lie algebra.
+\end{itemize}
+\note[item]<3- >{Correspondences between Lie groups and Lie algebras are the main draw of the theory: some questions that are hard in calculus are easier in algebra.}
+\end{overlayarea}
+
+\begin{overlayarea}{\textwidth}{.5\textheight}
+\begin{onlyenv}<1>
+\begin{lstlisting}
+locale lie_grp =
+    c_manifold charts \<infinity> +
+    grp_on carrier tms one +
+  assumes smooth_mult: "diff_on_product_manifold charts tms"
+      and smooth_inv: "diff \<infinity> charts charts invs"
+\end{lstlisting}
+\end{onlyenv}
+\begin{onlyenv}<2|handout:0>
+\begin{lstlisting}
+locale lie_algebra =
+    algebra_on \<gg> scale lie_bracket +
+    alternating_bilinear_on \<gg> scale lie_bracket +
+  assumes "\<lbrakk>x\<in>\<gg>; y\<in>\<gg>; z\<in>\<gg>\<rbrakk> \<Longrightarrow> jacobi_identity lie_bracket x y z"
+\end{lstlisting}
+\end{onlyenv}
+\end{overlayarea}
+
+\end{frame}
+
+
+%%%%%%%%%%%%%%
+%%% Part 2 %%%
+%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]\frametitle{Type Classes: Polymorphism in Isabelle/HOL}
+\note{.}
+\begin{onlyenv}<1-2|handout:0>
+\phantom{Quantification over types is not possible in HOL.}
+\end{onlyenv}
+\begin{onlyenv}<3- >
+Quantification over types is not possible in HOL.
+\end{onlyenv}
+\[
+\Alt<1|handout:0>
+  {\all{\alpha} \exists a \in (\mathrm{UNIV} :: \alpha \:\mathrm{set})}
+  {\Alt<2|handout:0>
+    {\all{\alpha} P (\alpha) \implies \exists a \in (\mathrm{UNIV} :: \alpha \:\mathrm{set})}
+    {\hcancel[red]{\all{\alpha} P (\alpha) \implies \exists a \in (\mathrm{UNIV} :: \alpha \:\mathrm{set})}}
+  }
+\]
+\pause
+\pause
+\pause
+Type classes offer a (restricted) alternative. A class can be defined much like a locale: it is possible that no types satisfy the sort constraints.
+\begin{lstlisting}
+class fin_dim_real_vector = real_vector +
+  fixes basis
+  assumes finite_Basis: "finite basis"
+  and independent_Basis:
+    "\<nexists>u. (\<Sum>v\<in>basis. u v *\<^sub>R v) = 0 \<and> (\<exists>v\<in>basis. u v \<noteq> 0)"
+  and span_Basis: "{\<Sum>a\<in>basis. r a *\<^sub>R a |r. True} = UNIV"
+\end{lstlisting}
+\end{frame}
+
+
+
+\begin{frame}[fragile]\frametitle{Transfer: Relators}
+Relators allow us to build transfer rules for constants from transfer relations. The most ubiquitous one is the function relator.
+\pause
+
+\vfill
+\begin{minipage}{0.2\textwidth}
+\begin{figure}
+  \centering
+  \begin{tikzcd}
+    \alpha \arrow[d, "f"'] \arrow[r, "\cong"] & \beta \arrow[d, "g"] \\
+    \alpha \arrow[r, "\cong"']                & \beta
+  \end{tikzcd}
+\end{figure}
+\end{minipage}\hfill%
+\begin{minipage}{0.7\textwidth}
+\begin{itemize}[< +- >]
+  \item $\alpha$ and $\beta$ \emph{related} by
+    $\;\cong \colon \alpha \to \beta \to \texttt{bool}$
+  \item Say a theorem involves a function $f\colon \alpha \to \alpha$, and we have a candidate $g\colon \beta \to \beta$ with equivalent behaviour
+  \item Isabelle can use a transfer rule \Alt<4>{}{constructed from $(\cong)$ and the function relator:}
+    \[\Alt<4>
+      {\all{a,b} a \cong b \implies f(a) \cong g(b)}
+      {[(\cong)===>(\cong)] \; f \; g}
+    \]
+\end{itemize}
+  \note[item]<4- >{And then it works! It works both ways too.}
+  \note[item]<5- >{This is the great contribution of transfer: generic construction for rules, and automation.}
+  \note[item]{}
+\end{minipage}
+\end{frame}
+
+
+
+\begin{frame}[fragile]\frametitle{(Real) Division Algebras}
+A (associative) division algebra is an (associative) algebra that has multiplicative identity and inverses.
+\pause
+
+\begin{overlayarea}{\textwidth}{0.25\textheight}
+\begin{onlyenv}<2|handout:0>
+\begin{lstlisting}
+locale assoc_div_algebra_on =
+  assoc_algebra_1_on S scale (\<Zspot>) \<one> +
+  div_algebra_on S scale (\<Zspot>) (*...*)
+\end{lstlisting}
+\end{onlyenv}
+
+\begin{onlyenv}<3- >
+\begin{lstlisting}
+class scalar_algebra = real_div_algebra + fin_dim_real_vector
+\end{lstlisting}
+\end{onlyenv}
+\end{overlayarea}
+\pause[4]
+
+\begin{minipage}{.47\textwidth}
+\begin{example}
+\begin{itemize}
+\item<4- > $\setR$ is a division algebra over itself.
+\item<5- > $\setC$ is a division algebra over $\setR$.
+  \note[item]{You can scale complex numbers by real numbers, and you can add and multiply them.}
+\item<6- > $\setH$ is a division algebra over $\setR$.
+\end{itemize}
+\end{example}
+\end{minipage}%
+\hfill%
+\begin{minipage}{.53\textwidth}
+\begin{itemize}
+\item[]<6- > $\setH = \left\lbrace a+bi+cj+dk \;|\; a,b,c,d \in \setR \right\rbrace$
+\item[]<6- > $i^2 = j^2 = k^2 = ijk = -1$
+\item[]<6- > not commutative: $ij = k$ but $ji = -k$
+\end{itemize}
+\end{minipage}
+\end{frame}
+
+
+
+\begin{frame}[fragile]\frametitle{Polynomials over Type Embeddings}
+\note{.}
+The fundamental theorem of algebra states that every complex polynomial has a root. This implies every complex polynomial can be factorised.
+$$p_\setC(x) = c \prod_{j=0}^{\mathrm{deg}(p)}\Big(x - r(j)\Big)$$
+
+\begin{lstlisting}
+definition "c \<simeq> r \<equiv> c = (r *\<^sub>R 1)"
+definition "p \<doteq> q \<equiv> (\<forall>i::nat. coeff p i \<simeq> coeff q i)"
+\end{lstlisting}
+
+$$p_\setR(x) = r \prod_{j=0}^{N_r}\Big(x - r_r(j)\Big) \prod_{k=0}^{N_i}\Big(x - r_i(k)\Big)\Big(x - \overline{r_i(k)}\Big)$$
+\end{frame}
+
+
+
+\end{document}
