@@ -17,6 +17,13 @@ ronment, and a command `\lisa` for inline listings. See also the example `mwe_li
 This directory also contains a `setup.tex` file with some configuration I use often, for use with `\input` in the preamble. I plan
  to keep updating this.
 
+#### Template Setup
+The `template.tex` can be copied and used, provided all the file paths in `template.tex`, `setup.tex`, and `setup_shared.tex` point to the correct files. Furthermore, `lisa.sty` needs to be picked up by your LaTeX compiler. To set this up on Ubuntu with Tex Live, I made a symlink (you may need to create the directory first):
+```
+ln -s ~/shared/tex/lisa/lisa.sty ~/texmf/tex/latex/lisa/
+```
+The rough-and-ready solution would be to copy all the `.tex` and `.sty` files to your new project's directory, and adjust file paths accordingly.
+
 ### rebuttal.sty
 ```./tex/rebuttal/```
 
