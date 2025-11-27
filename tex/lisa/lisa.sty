@@ -63,9 +63,9 @@
   morekeywords=[2]{
     _first,
     theory,begin,end,types,datatype,consts,defs,primrec,
-    typedef,overloaded,quotient_type,class,instance,instantiation,
+    typedef,type_synonym,overloaded,quotient_type,class,instance,instantiation,partial,morphisms,
     syntax,translations,apply,subgoal,done,
-    lemma,theorem,corollary,definition,lift_definition,inductive,where,locale,sublocale,context,abbreviation,interpretation,notation,
+    lemma,theorem,corollary,definition,lift_definition,inductive,where,locale,sublocale,is,context,abbreviation,interpretation,notation,
     next,proof,and,qed,
     assumes,fixes,shows,case,goal,obtains,defines,OF,in,includes,
     fixed variables,
@@ -78,11 +78,11 @@
   keywordstyle={[3]\bfseries\color{isa-kwcolor-3}},
   morekeywords=[4]{
     then,from,this,thus,hence,have,also,assume,obtain,moreover,fix,show,by,using,unfolding,
-    ultimately,let,if,for,else,consider,define
+    ultimately,finally,let,if,for,else,consider,define
   },
   keywordstyle={[4]\bfseries\color{isa-kwcolor-4}},
   sensitive=true,
-  morecomment=[l]{-- },
+%   morecomment=[l]{-- },
   morecomment=[s]{(*}{*)},
 %  morecomment=[s]{\\<\^cancel>\\<open>}{\\<close>}, TODO ⌦
   literate=
@@ -101,11 +101,15 @@
     {\\<^sub>s}{{$\psub{s}$}}1
     {\\<^sub>S}{{$\psub{S}$}}1
     {\\<^sub>R}{{$\psub{R}$}}1
+    {\\<^sub>V}{{$\psub{V}$}}1
+    % {\\<^sub>C}{{$\psub{C}$}}1
+    {\\<^sub>C}{{$\psub{$\mathbb C$}$}}1
     {\\<^sub>r}{{$\psub{r}$}}1
     {\\<^sub>i}{{$\psub{i}$}}1
     {\\<^sub>p}{{$\psub{p}$}}1
     {\\<^sub>\\<psi>}{{$\psub{\psi}$}}1
-    {*\\<^sub>C}{{$*_{\mathbb C}$}}1
+    % {\\<^sub>\\<eta>}{{$\psub{\eta}$}}1
+    % {*\\<^sub>C}{{$*_{\mathbb C}$}}1
 %    {*\\<^sub>s}{{$\texttt{*}_\texttt{s}$}}2
 %    {m\\<^sub>1}{{$\texttt{m}_\texttt{1}$}}2
 %    {m\\<^sub>2}{{$\texttt{m}_\texttt{2}$}}2
@@ -117,6 +121,7 @@
     {T\\<^sub>\\<psi>\\<^sub>p\\<psi>U}{{$\mathrm{T}_{\psi \mathrm{p}}\psi \mathrm{U}$}}6
 %    {*\\<^sub>S}{{$\texttt{*}_\texttt{S}$}}2
 %    {*\\<^sub>R}{{$\texttt{*}_\texttt{R}$}}2
+%    {*\\<^sub>C}{{$\texttt{*}_\texttt{C}$}}2
 %    {r\\<^sub>r}{{$\texttt{r}_\texttt{r}$}}2
 %    {N\\<^sub>r}{{$\texttt{N}_\texttt{r}$}}2
 %    {r\\<^sub>i}{{$\texttt{r}_\texttt{i}$}}2
@@ -138,10 +143,13 @@
     {\\<or>}{{$\lor$}}1
     {\\<circ>}{{$\circ$}}1
     {\\<Zspot>}{{$\bullet$}}1
+    {\\<Zspot>\\<^sub>\\<eta>}{{$\bullet_{\eta}$}}2
     {\\<bullet>}{{$\bullet$}}1
     {\\<hungarumlaut>}{{$\diamond$}}1 % TODO bad fit - replace?
     {\\<restriction>}{{$\upharpoonright$}}1
-    {\\<dots>}{{\dots}}1
+    {\\<bar>}{{$\vert$}}1
+    {\\<dots>}{{\dots}}2
+    {o\\<^sub>C\\<^sub>L}{{$\circ_{\texttt{CL}}$}}4
 %   sets
     {\\<in>}{{$\in$}}1
     {\\<notin>}{{$\notin$}}1
@@ -158,6 +166,7 @@
     {\\<rightharpoonup>}{{$\rightharpoonup$}}2
     {\\<Longrightarrow>}{{$\Longrightarrow$}}3
     {\\<longrightarrow>}{{$\longrightarrow$}}3
+    {\\<longlonglongrightarrow>}{{$\xrightarrow{\hspace{0.8cm}}$}}5
     {\\<leftrightarrow>}{{$\leftrightarrow$}}2
     {\\<longleftrightarrow>}{{$\longleftrightarrow$}}3
     {\\<leadsto>}{{$\rightsquigarrow$}}2
@@ -171,19 +180,29 @@
 %   letters and symbols
     {\\<theta>}{{$\theta$}}1
     {\\<Theta>}{{$\Theta$}}1
+    {\\<eta>}{{$\eta$}}1
+    {\\<alpha>}{{$\alpha$}}1
     {\\<lambda>}{{$\lambda$}}1
     {\\<iota>}{{$\iota$}}1
     {\\<kappa>}{{$\kappa$}}1
     {\\<chi>}{{$\chi$}}1
     {\\<rho>}{{$\rho$}}1
     {\\<omega>}{{$\omega$}}1
+    {\\<Omega>}{{$\Omega$}}1
     {\\<psi>}{{$\psi$}}1
+    {\\<phi>}{{$\phi$}}1
+    {\\<pi>}{{$\pi$}}1
     {\\<triangle>}{{$\triangle$}}1
     {\\<infinity>}{{$\infty$}}2
     {\\<gg>}{{$\mathfrak g$}}1
     {\\<hh>}{{$\mathfrak h$}}1
     {\\<XX>}{{$\mathfrak X$}}1
+    {\\<II>}{{$\mathfrak I$}}1
     {\\<L>}{{$\mathcal L$}}1
+    {\\<O>}{{$\mathcal O$}}1
+    {\\<d>}{{$d\mspace{-2.5mu}l$}}1
+    % {\\<d>}{{$\mathbb d$}}1
+    {\\<AA>}{{$\mathfrak A$}}1
     {\\<one>}{{$\mathfrak 1$}}1
 %   anything else
     {\\<lbrakk>}{{$\lsemantics$}}1
@@ -196,6 +215,8 @@
 %    {\\<\^sub>}{{\_}}1
 %    {ü}{"u}1 {ä}{"a}1 {ö}{"o}1
 %    {Ü}{"U}1 {Ä}{"A}1 {Ö}{"O}1 {ß}{{ss}}1
+    {\\<pi>\\<^sub>\\<omega>}{{$\pi_\omega$}}2
+    {\\<Parallel>\\<^sub>\\<omega>}{{$\parallel_\omega$}}2
 }[keywords,comments,strings]%
 
 % useful defaults
@@ -225,6 +246,7 @@
 % extra key for adding literates to lstset without forgetting all previous ones
 % https://tex.stackexchange.com/questions/149056/how-can-i-define-additional-literate-replacements-without-deleting-existing-ones
 % see also https://tex.stackexchange.com/questions/202331/multiple-literates-in-a-listings-style-definition
+% example use: \begin{lstlisting}[moreliterate={\\<XX>\\<^sub>\\<L>}{{$\mathfrak{X}_{\mathcal{L}}$}}2]\<XX>\<^sub>\<L>\end{lstlisting}
 \makeatletter
 \def\addToLiterate#1{\edef\lst@literate{\unexpanded\expandafter{\lst@literate}\unexpanded{#1}}}
 \lst@Key{moreliterate}{}{\addToLiterate{#1}}
