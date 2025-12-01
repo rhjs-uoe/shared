@@ -3,3 +3,11 @@
 *.aux
 *.log
 *.synctex.gz
+*.run.xml
+*.bcf
+*.fdb_latexmk
+*.fls
+*.nav
+*.snm
+*.toc
+*.vrb
