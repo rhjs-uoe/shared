@@ -1,3 +1,11 @@
 mupdf_scripts/latex-mupdf-update-unix
 mupdf_scripts
 tex/lisa/template.pdf
+tex/lisa/beamer_template/main.bcf
+tex/lisa/beamer_template/main.fdb_latexmk
+tex/lisa/beamer_template/main.fls
+tex/lisa/beamer_template/main.nav
+tex/lisa/beamer_template/main.run.xml
+tex/lisa/beamer_template/main.snm
+tex/lisa/beamer_template/main.toc
+tex/lisa/beamer_template/main.vrb
